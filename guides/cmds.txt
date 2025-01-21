@@ -1,0 +1,13 @@
+UPDATE WHISPER (PULL)
+pip install git+https://github.com/openai/whisper.git 
+pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
+
+RUN WHISPER
+whisper audio.flac audio.mp3 audio.wav --model turbo
+
+HELP
+whisper --help
+
+
+
+whisper audio.flac introduction.mp3 audio.wav --model tiny
