@@ -1,8 +1,8 @@
 import ffmpeg
 import os
 
-input_folder = "videos"
-output_folder = "Pikabooirl"
+input_folder = "zzz.videos"
+output_folder = "HasanAbi"
 
 # Ensure the output folder exists
 if not os.path.exists(output_folder):
