@@ -2,7 +2,7 @@ import ffmpeg
 import os
 
 input_folder = "zzz.videos"
-output_folder = "Fannsy"
+output_folder = "LanceMcDonald"
 
 # Ensure the output folder exists
 if not os.path.exists(output_folder):
