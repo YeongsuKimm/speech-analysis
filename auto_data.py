@@ -84,7 +84,7 @@ def main(url, streamer_name):
         process_twitch_audio(audio_path, streamer_name)
     os.remove(f"data/{streamer_name}/output.wav")
 
-for name in os.listdir("data/"):
+for name in os.listdir("vods/"):
     with open(f"vods/{name}", "r") as file:
         for line in file:
             main(line, name)
