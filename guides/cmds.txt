@@ -11,3 +11,6 @@ whisper --help
 
 
 whisper audio.flac introduction.mp3 audio.wav --model tiny
+
+
+twitch-dl download https://www.twitch.tv/videos/2382487755

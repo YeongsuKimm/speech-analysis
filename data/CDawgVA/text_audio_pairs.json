@@ -1,9 +1,5 @@
 [
     {
-        "audio": "data/CDawgVA/2025-01-24 01-05-26.mp3",
-        "text": "data/CDawgVA/2025-01-24 01-05-26.txt"
-    },
-    {
         "audio": "data/CDawgVA/2025-01-24 01-06-06.mp3",
         "text": "data/CDawgVA/2025-01-24 01-06-06.txt"
     },
@@ -14,5 +10,9 @@
     {
         "audio": "data/CDawgVA/2025-01-24 01-05-02.mp3",
         "text": "data/CDawgVA/2025-01-24 01-05-02.txt"
+    },
+    {
+        "audio": "data/CDawgVA/2025-01-24 01-05-26.mp3",
+        "text": "data/CDawgVA/2025-01-24 01-05-26.txt"
     }
 ]

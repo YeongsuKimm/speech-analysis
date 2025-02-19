@@ -1,9 +1,5 @@
 [
     {
-        "audio": "data/MARI/2025-01-26 18-20-59.mp3",
-        "text": "data/MARI/2025-01-26 18-20-59.txt"
-    },
-    {
         "audio": "data/MARI/2025-01-26 18-20-30.mp3",
         "text": "data/MARI/2025-01-26 18-20-30.txt"
     },
@@ -14,5 +10,9 @@
     {
         "audio": "data/MARI/2025-01-26 18-20-13.mp3",
         "text": "data/MARI/2025-01-26 18-20-13.txt"
+    },
+    {
+        "audio": "data/MARI/2025-01-26 18-20-59.mp3",
+        "text": "data/MARI/2025-01-26 18-20-59.txt"
     }
 ]

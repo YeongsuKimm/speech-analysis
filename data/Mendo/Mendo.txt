@@ -1,14 +1,7 @@
 Hours streamed: 694  
 Average viewers: 786  
-Peak viewers: 14,042  
-Hours watched: 545,778  
+Peak viewers: 14042  
+Hours watched: 545778  
 Followers gained: 4.01  
 Followers / hour: 8  
-Followers: 693,826  
-Hours streamed: 694  
-Average viewers: 786  
-Peak viewers: 14,042  
-Hours watched: 545,778  
-Followers gained: 4.01  
-Followers / hour: 8  
-Followers: 693,826  
+Followers: 693826  

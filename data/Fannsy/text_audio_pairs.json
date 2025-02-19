@@ -1,9 +1,5 @@
 [
     {
-        "audio": "data/Fannsy/2025-01-27 02-52-00.mp3",
-        "text": "data/Fannsy/2025-01-27 02-52-00.txt"
-    },
-    {
         "audio": "data/Fannsy/2025-01-27 02-51-06.mp3",
         "text": "data/Fannsy/2025-01-27 02-51-06.txt"
     },
@@ -14,5 +10,9 @@
     {
         "audio": "data/Fannsy/2025-01-27 02-51-34.mp3",
         "text": "data/Fannsy/2025-01-27 02-51-34.txt"
+    },
+    {
+        "audio": "data/Fannsy/2025-01-27 02-52-00.mp3",
+        "text": "data/Fannsy/2025-01-27 02-52-00.txt"
     }
 ]

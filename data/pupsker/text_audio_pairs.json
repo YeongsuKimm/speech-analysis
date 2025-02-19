@@ -1,15 +1,15 @@
 [
     {
+        "audio": "data/pupsker/2025-01-26 18-01-18.mp3",
+        "text": "data/pupsker/2025-01-26 18-01-18.txt"
+    },
+    {
         "audio": "data/pupsker/2025-01-26 18-00-06.mp3",
         "text": "data/pupsker/2025-01-26 18-00-06.txt"
     },
     {
         "audio": "data/pupsker/2025-01-26 18-00-35.mp3",
         "text": "data/pupsker/2025-01-26 18-00-35.txt"
-    },
-    {
-        "audio": "data/pupsker/2025-01-26 18-01-18.mp3",
-        "text": "data/pupsker/2025-01-26 18-01-18.txt"
     },
     {
         "audio": "data/pupsker/2025-01-26 17-59-32.mp3",
