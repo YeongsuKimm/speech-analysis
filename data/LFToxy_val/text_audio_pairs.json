@@ -4,15 +4,15 @@
         "text": "data/LFToxy_val/2025-01-26 18-30-57.txt"
     },
     {
+        "audio": "data/LFToxy_val/2025-01-26 18-28-18.mp3",
+        "text": "data/LFToxy_val/2025-01-26 18-28-18.txt"
+    },
+    {
         "audio": "data/LFToxy_val/2025-01-26 18-29-53.mp3",
         "text": "data/LFToxy_val/2025-01-26 18-29-53.txt"
     },
     {
         "audio": "data/LFToxy_val/2025-01-26 18-29-09.mp3",
         "text": "data/LFToxy_val/2025-01-26 18-29-09.txt"
-    },
-    {
-        "audio": "data/LFToxy_val/2025-01-26 18-28-18.mp3",
-        "text": "data/LFToxy_val/2025-01-26 18-28-18.txt"
     }
 ]

@@ -1,18 +1,18 @@
 [
     {
-        "audio": "data/bateson87/2025-01-26 15-46-45.mp3",
-        "text": "data/bateson87/2025-01-26 15-46-45.txt"
-    },
-    {
-        "audio": "data/bateson87/2025-01-26 15-47-11.mp3",
-        "text": "data/bateson87/2025-01-26 15-47-11.txt"
-    },
-    {
         "audio": "data/bateson87/2025-01-26 15-47-57.mp3",
         "text": "data/bateson87/2025-01-26 15-47-57.txt"
     },
     {
         "audio": "data/bateson87/2025-01-26 15-46-02.mp3",
         "text": "data/bateson87/2025-01-26 15-46-02.txt"
+    },
+    {
+        "audio": "data/bateson87/2025-01-26 15-46-45.mp3",
+        "text": "data/bateson87/2025-01-26 15-46-45.txt"
+    },
+    {
+        "audio": "data/bateson87/2025-01-26 15-47-11.mp3",
+        "text": "data/bateson87/2025-01-26 15-47-11.txt"
     }
 ]

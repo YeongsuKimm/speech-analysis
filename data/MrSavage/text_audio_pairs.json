@@ -1,5 +1,9 @@
 [
     {
+        "audio": "data/MrSavage/2025-01-26 11-42-44.mp3",
+        "text": "data/MrSavage/2025-01-26 11-42-44.txt"
+    },
+    {
         "audio": "data/MrSavage/2025-01-26 11-42-07.mp3",
         "text": "data/MrSavage/2025-01-26 11-42-07.txt"
     },
@@ -10,9 +14,5 @@
     {
         "audio": "data/MrSavage/2025-01-26 11-44-25.mp3",
         "text": "data/MrSavage/2025-01-26 11-44-25.txt"
-    },
-    {
-        "audio": "data/MrSavage/2025-01-26 11-42-44.mp3",
-        "text": "data/MrSavage/2025-01-26 11-42-44.txt"
     }
 ]

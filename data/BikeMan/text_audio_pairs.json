@@ -1,5 +1,9 @@
 [
     {
+        "audio": "data/BikeMan/2025-01-26 18-38-24.mp3",
+        "text": "data/BikeMan/2025-01-26 18-38-24.txt"
+    },
+    {
         "audio": "data/BikeMan/2025-01-26 18-37-12.mp3",
         "text": "data/BikeMan/2025-01-26 18-37-12.txt"
     },
@@ -10,9 +14,5 @@
     {
         "audio": "data/BikeMan/2025-01-26 18-37-35.mp3",
         "text": "data/BikeMan/2025-01-26 18-37-35.txt"
-    },
-    {
-        "audio": "data/BikeMan/2025-01-26 18-38-24.mp3",
-        "text": "data/BikeMan/2025-01-26 18-38-24.txt"
     }
 ]

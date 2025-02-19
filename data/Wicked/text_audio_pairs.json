@@ -1,15 +1,15 @@
 [
     {
+        "audio": "data/Wicked/2025-01-27 01-58-35.mp3",
+        "text": "data/Wicked/2025-01-27 01-58-35.txt"
+    },
+    {
         "audio": "data/Wicked/2025-01-27 01-58-00.mp3",
         "text": "data/Wicked/2025-01-27 01-58-00.txt"
     },
     {
         "audio": "data/Wicked/2025-01-27 01-57-24.mp3",
         "text": "data/Wicked/2025-01-27 01-57-24.txt"
-    },
-    {
-        "audio": "data/Wicked/2025-01-27 01-58-35.mp3",
-        "text": "data/Wicked/2025-01-27 01-58-35.txt"
     },
     {
         "audio": "data/Wicked/2025-01-27 01-56-54.mp3",

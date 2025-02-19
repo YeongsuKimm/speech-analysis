@@ -1,15 +1,15 @@
 [
     {
+        "audio": "data/ohnePixel/2025-01-26 11-07-02.mp3",
+        "text": "data/ohnePixel/2025-01-26 11-07-02.txt"
+    },
+    {
         "audio": "data/ohnePixel/2025-01-26 11-05-57.mp3",
         "text": "data/ohnePixel/2025-01-26 11-05-57.txt"
     },
     {
         "audio": "data/ohnePixel/2025-01-26 11-05-03.mp3",
         "text": "data/ohnePixel/2025-01-26 11-05-03.txt"
-    },
-    {
-        "audio": "data/ohnePixel/2025-01-26 11-07-02.mp3",
-        "text": "data/ohnePixel/2025-01-26 11-07-02.txt"
     },
     {
         "audio": "data/ohnePixel/2025-01-26 11-06-34.mp3",
