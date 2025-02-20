@@ -85,8 +85,8 @@ def main(url, streamer_name,strt):
     os.remove(f"data/{streamer_name}/output.wav")
 
 completed=["ahmpy","aircool","AuzioMF","bateson87","Beardageddon","BennyCentral","BikeMan","Blue_Squadron","BreaK","BreesKnees","BrownGotti","Caedrel","carmen","caseoh_","CDawgVA","cjya","Couriway","crazyjapanese","d0cc_tv","DEFAC3D","Elajjaz","erobb221","Eros","Everretta",
-           "Fannsy","Geef","Gnomonkey","Gorgc","HasanAbi","HollywoodBob","huncho","iddqd","ixxdeee","J4CKIECHAN","Jacque","JayOddity","JonSandman","Jynxzi"]
-
+           "Fannsy","Geef","Gnomonkey","Gorgc","HasanAbi","HollywoodBob","huncho","iddqd","ixxdeee","J4CKIECHAN","Jacque","JayOddity","JonSandman","Jynxzi","k3soju","KaiCenat","Kerrty","KmartPoker","kyliebitkin","Lacy"]
+# LACY IS NOT COMPLETE FIGURE OUT WHAT IS WRONG I THINK THE STREAM IS OUTDATED
 for name in os.listdir("vods/"):
     i=1
     if name not in completed:
