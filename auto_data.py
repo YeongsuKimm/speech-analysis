@@ -8,6 +8,7 @@ from pyannote.audio.pipelines import SpeakerDiarization
 from pyannote.core import Segment
 from pyannote.audio import Model
 from pydub import AudioSegment
+import sys
 
 def mkv_to_wav(input_file, output_file):
     try:
@@ -62,16 +63,47 @@ def identify_main_speaker(speaker_timestamps):
     main_speaker = max(speaker_durations, key=speaker_durations.get)
     return main_speaker
 
-def extract_main_speaker_audio(input_audio, speaker_timestamps, main_speaker, streamer_name, strt):
+def extract_main_speaker_audio(input_audio, speaker_timestamps, main_speaker, streamer_name, strt, min_duration=10, max_duration=20, merge_gap=2):
     output_folder = f"data/{streamer_name}"
     os.makedirs(output_folder, exist_ok=True)
     audio = AudioSegment.from_wav(input_audio)
-    for idx, (start, end) in enumerate(speaker_timestamps[main_speaker]):
-        start_ms = int(start * 1000)
-        end_ms = int(end * 1000)
+
+    # Sort timestamps
+    timestamps = sorted(speaker_timestamps[main_speaker], key=lambda x: x[0])
+
+    merged_segments = []
+    current_start, current_end = timestamps[0]
+
+    for i in range(1, len(timestamps)):
+        start, end = timestamps[i]
+
+        # Check if the gap is small enough to merge
+        if start - current_end <= merge_gap:
+            current_end = end  # Extend the segment
+        else:
+            merged_segments.append((current_start, current_end))
+            current_start, current_end = start, end
+
+    # Add last segment
+    merged_segments.append((current_start, current_end))
+
+    # Export merged segments, ensuring each is within min/max duration
+    clip_idx = 0
+    for start, end in merged_segments:
+        duration = end - start
+        if duration < min_duration:
+            continue  # Skip very short clips
+
+        if duration > max_duration:
+            end = start + max_duration  # Trim to max duration
+
+        start_ms, end_ms = int(start * 1000), int(end * 1000)
         clip = audio[start_ms:end_ms]
-        clip.export(f"{output_folder}/{strt}clip_{idx}.mp3", format="mp3")
-    print(f"Extracted {len(speaker_timestamps[main_speaker])} clips of the main speaker for {streamer_name}.")
+        clip.export(f"{output_folder}/{strt}clip_{clip_idx}.mp3", format="mp3")
+        clip_idx += 1
+
+    print(f"Extracted {clip_idx} clips (each {min_duration}-{max_duration}s) for {streamer_name}.")
+
 
 def process_twitch_audio(audio_path, streamer_name, strt):
     speaker_timestamps = diarize_audio(audio_path)
@@ -84,17 +116,47 @@ def main(url, streamer_name,strt):
         process_twitch_audio(audio_path, streamer_name, strt)
     os.remove(f"data/{streamer_name}/output.wav")
 
-completed=["ahmpy","aircool","AuzioMF","bateson87","Beardageddon","BennyCentral","BikeMan","Blue_Squadron","BreaK","BreesKnees","BrownGotti","Caedrel","carmen","caseoh_","CDawgVA","cjya","Couriway","crazyjapanese","d0cc_tv","DEFAC3D","Elajjaz","erobb221","Eros","Everretta",
-           "Fannsy","Geef","Gnomonkey","Gorgc","HasanAbi","HollywoodBob","huncho","iddqd","ixxdeee","J4CKIECHAN","Jacque","JayOddity","JonSandman","Jynxzi","k3soju","KaiCenat","Kerrty","KmartPoker","kyliebitkin","Lacy"]
+completed=[]
+with open("completed.txt", "r") as file:
+    for line in file:
+        if "\n" in line:
+            completed.append(str(line)[0:-1])
+        else:
+            completed.append(str(line))
+print(completed)
+
+failed=[]
+with open("failed.txt", "r") as file:
+    for line in file:
+        if "\n" in line:
+            failed.append(str(line)[0:-1])
+        else:
+            failed.append(str(line))
+print(failed)
+
 # LACY IS NOT COMPLETE FIGURE OUT WHAT IS WRONG I THINK THE STREAM IS OUTDATED
+# NyyBeats ALSO
 for name in os.listdir("vods/"):
     i=1
     if name not in completed:
         with open(f"vods/{name}", "r") as file:
             for line in file:
-                print(name);
-                main(line, name,i)
+                print(name)
+                try:
+                    main(line, name,i)
+                except BrokenPipeError:
+                    with open("completed.txt","a") as file2:
+                        file2.write("\n"+name)
+                    with open("failed.txt","a") as file2:
+                        file2.write("\n"+name)
+                    # rerun this file
+                    print(f"Error encountered. Restarting script in 5 seconds...")
+                    time.sleep(5)  # Optional delay before restart
+
+                    subprocess.run([sys.executable, "auto_data.py"])
                 i+=1;
+            with open("completed.txt","a") as file2:
+                file2.write("\n"+name)
 
 from extract_text import process_audio_files
 from TextAudioPair import find_text_audio_pairs
