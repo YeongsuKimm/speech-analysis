@@ -12,7 +12,7 @@ import sys
 
 def mkv_to_wav(input_file, output_file):
     try:
-        ffmpeg.input(input_file, ss=0, t=900).output(output_file, acodec='pcm_s16le', ar=44100, ac=2).run()
+        ffmpeg.input(input_file, ss=0, t=1800).output(output_file, acodec='pcm_s16le', ar=44100, ac=2).run()
         print(f"Conversion successful: {output_file}")
     except ffmpeg.Error as e:
         print(f"Error: {e}")
@@ -63,7 +63,7 @@ def identify_main_speaker(speaker_timestamps):
     main_speaker = max(speaker_durations, key=speaker_durations.get)
     return main_speaker
 
-def extract_main_speaker_audio(input_audio, speaker_timestamps, main_speaker, streamer_name, strt, min_duration=10, max_duration=20, merge_gap=2):
+def extract_main_speaker_audio(input_audio, speaker_timestamps, main_speaker, streamer_name, strt, min_duration=2, max_duration=20, merge_gap=2):
     output_folder = f"data/{streamer_name}"
     os.makedirs(output_folder, exist_ok=True)
     audio = AudioSegment.from_wav(input_audio)
