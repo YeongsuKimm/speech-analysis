@@ -1,0 +1,1 @@
+ If you're worried about it being a one-click teleport, tie it to a home teleport cooldown and make it so it activates home teleport cooldown when you use it.

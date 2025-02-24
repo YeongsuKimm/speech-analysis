@@ -1,0 +1,1 @@
+ you can look at Windows Event Logs, I personally just kind of just want to get the stream back on, but I could have looked through Windows Event Log to figure out what potentially could have crashed it, and I totally would understand based on those diagnostics. Surely.

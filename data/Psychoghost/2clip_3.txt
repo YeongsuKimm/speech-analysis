@@ -1,0 +1,1 @@
+ Okay. I also realized that the noise gate was not applied during the last couple of streams, so you could hear every got them keyboard hits. It should be fixed now. Okay, why do I see my cursor? I am pretty sure I'm not supposed to see that one.

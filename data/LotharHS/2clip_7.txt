@@ -1,0 +1,1 @@
+ I've accomplished the border already. I mean, you can see the border. We're on third row. There's a green frame on the current character.

@@ -1,0 +1,1 @@
+ Show you the sum that every time there's a stack on the enemy team now.

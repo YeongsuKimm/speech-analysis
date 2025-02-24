@@ -1,0 +1,1 @@
+ It says Fury's GADS 1.09, what? Shouldn't they be 0.79?

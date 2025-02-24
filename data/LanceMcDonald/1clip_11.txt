@@ -1,0 +1,1 @@
+ Oh yeah, the final game is meant to have a procedural map generation, yeah. They've just got a static map for the, it was a static seed for the, um, for the network test. It'd be so cool if we had dumped the network test and finally had to change the map seed and see like how fucking broken it was at this point in development. Uh oh, is it all right?

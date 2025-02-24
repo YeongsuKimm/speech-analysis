@@ -1,0 +1,1 @@
+ If the bar is yellow, they are not aggressive unless you are on the red, they are aggressive.

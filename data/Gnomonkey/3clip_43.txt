@@ -1,0 +1,1 @@
+ The Ruby is to make sure like you don't have to do a ton of switches, I think. So it's like, if you do one way cross, but you still do like okay damage, that makes sense, I think.

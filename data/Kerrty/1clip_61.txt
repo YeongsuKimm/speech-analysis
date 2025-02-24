@@ -1,0 +1,1 @@
+ Okay, players can now disarm and pick up dark dynamite satchels. This is nice.

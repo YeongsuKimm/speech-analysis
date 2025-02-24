@@ -1,0 +1,1 @@
+ melee tools will cause more damage to targets. And there are more in the world, melee weapons spawn in your ball. Okay, that's good. Pull up damage from stuck projectiles as backup to a meaningful level of damage. We'll talk about how this affects traits like blademancer and deserker at a later time. We've also spent a lot of time

@@ -1,0 +1,1 @@
+ Yeah, the noise gate is just the threshold of how low I can talk for it to get picked up. That wouldn't stop it from peaking. What would change the peaking?

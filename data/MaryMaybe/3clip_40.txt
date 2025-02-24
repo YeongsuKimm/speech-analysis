@@ -1,0 +1,1 @@
+ The mini map is displayed in the lower left corner of the screen. It gives you information on your surroundings. You can approach these individuals and press F. By pressing C while in the field, you can open the mini to save your progress and address game settings. Oh perfect, that's what I was about to do.
