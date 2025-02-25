@@ -1,0 +1,1 @@
+ Lazy Rip was working fine. Does it now open the containers again? Talk.

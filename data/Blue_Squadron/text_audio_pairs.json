@@ -1,18 +1,182 @@
 [
     {
-        "audio": "data/Blue_Squadron/2025-01-26 18-02-41.mp3",
-        "text": "data/Blue_Squadron/2025-01-26 18-02-41.txt"
+        "audio": "data/Blue_Squadron/1clip_13.mp3",
+        "text": "data/Blue_Squadron/1clip_13.txt"
     },
     {
-        "audio": "data/Blue_Squadron/2025-01-26 18-03-20.mp3",
-        "text": "data/Blue_Squadron/2025-01-26 18-03-20.txt"
+        "audio": "data/Blue_Squadron/3clip_7.mp3",
+        "text": "data/Blue_Squadron/3clip_7.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_4.mp3",
+        "text": "data/Blue_Squadron/2clip_4.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_5.mp3",
+        "text": "data/Blue_Squadron/1clip_5.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_8.mp3",
+        "text": "data/Blue_Squadron/2clip_8.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_0.mp3",
+        "text": "data/Blue_Squadron/3clip_0.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_6.mp3",
+        "text": "data/Blue_Squadron/2clip_6.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_8.mp3",
+        "text": "data/Blue_Squadron/1clip_8.txt"
     },
     {
         "audio": "data/Blue_Squadron/2025-01-26 18-02-10.mp3",
         "text": "data/Blue_Squadron/2025-01-26 18-02-10.txt"
     },
     {
+        "audio": "data/Blue_Squadron/1clip_14.mp3",
+        "text": "data/Blue_Squadron/1clip_14.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_7.mp3",
+        "text": "data/Blue_Squadron/1clip_7.txt"
+    },
+    {
         "audio": "data/Blue_Squadron/2025-01-26 18-04-34.mp3",
         "text": "data/Blue_Squadron/2025-01-26 18-04-34.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_6.mp3",
+        "text": "data/Blue_Squadron/3clip_6.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_1.mp3",
+        "text": "data/Blue_Squadron/1clip_1.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_5.mp3",
+        "text": "data/Blue_Squadron/3clip_5.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_11.mp3",
+        "text": "data/Blue_Squadron/3clip_11.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_4.mp3",
+        "text": "data/Blue_Squadron/1clip_4.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_2.mp3",
+        "text": "data/Blue_Squadron/2clip_2.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_9.mp3",
+        "text": "data/Blue_Squadron/3clip_9.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_13.mp3",
+        "text": "data/Blue_Squadron/3clip_13.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_1.mp3",
+        "text": "data/Blue_Squadron/3clip_1.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_9.mp3",
+        "text": "data/Blue_Squadron/1clip_9.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_2.mp3",
+        "text": "data/Blue_Squadron/3clip_2.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_15.mp3",
+        "text": "data/Blue_Squadron/1clip_15.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_15.mp3",
+        "text": "data/Blue_Squadron/3clip_15.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_2.mp3",
+        "text": "data/Blue_Squadron/1clip_2.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_12.mp3",
+        "text": "data/Blue_Squadron/1clip_12.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_0.mp3",
+        "text": "data/Blue_Squadron/1clip_0.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_5.mp3",
+        "text": "data/Blue_Squadron/2clip_5.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_10.mp3",
+        "text": "data/Blue_Squadron/1clip_10.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_14.mp3",
+        "text": "data/Blue_Squadron/3clip_14.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2025-01-26 18-03-20.mp3",
+        "text": "data/Blue_Squadron/2025-01-26 18-03-20.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_3.mp3",
+        "text": "data/Blue_Squadron/3clip_3.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_0.mp3",
+        "text": "data/Blue_Squadron/2clip_0.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_7.mp3",
+        "text": "data/Blue_Squadron/2clip_7.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2025-01-26 18-02-41.mp3",
+        "text": "data/Blue_Squadron/2025-01-26 18-02-41.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_6.mp3",
+        "text": "data/Blue_Squadron/1clip_6.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_10.mp3",
+        "text": "data/Blue_Squadron/3clip_10.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_4.mp3",
+        "text": "data/Blue_Squadron/3clip_4.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_1.mp3",
+        "text": "data/Blue_Squadron/2clip_1.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/2clip_3.mp3",
+        "text": "data/Blue_Squadron/2clip_3.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_12.mp3",
+        "text": "data/Blue_Squadron/3clip_12.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_11.mp3",
+        "text": "data/Blue_Squadron/1clip_11.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/1clip_3.mp3",
+        "text": "data/Blue_Squadron/1clip_3.txt"
+    },
+    {
+        "audio": "data/Blue_Squadron/3clip_8.mp3",
+        "text": "data/Blue_Squadron/3clip_8.txt"
     }
 ]

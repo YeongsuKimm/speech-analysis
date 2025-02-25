@@ -1,0 +1,1 @@
+ Your stream goes down. So like right now, if I was to go on my OBS right here, click stop streaming. It would, like my stream would just live on still. It wouldn't turn off because that ingest is keeping my stream live. I'm not keeping my stream live. So the only time my stream technically could go down is if the ingest goes down, which is pretty rare.

@@ -1,11 +1,35 @@
 [
     {
+        "audio": "data/ScrubNoob/1clip_2.mp3",
+        "text": "data/ScrubNoob/1clip_2.txt"
+    },
+    {
         "audio": "data/ScrubNoob/2025-01-26 18-25-33.mp3",
         "text": "data/ScrubNoob/2025-01-26 18-25-33.txt"
     },
     {
+        "audio": "data/ScrubNoob/1clip_4.mp3",
+        "text": "data/ScrubNoob/1clip_4.txt"
+    },
+    {
+        "audio": "data/ScrubNoob/1clip_0.mp3",
+        "text": "data/ScrubNoob/1clip_0.txt"
+    },
+    {
+        "audio": "data/ScrubNoob/1clip_6.mp3",
+        "text": "data/ScrubNoob/1clip_6.txt"
+    },
+    {
         "audio": "data/ScrubNoob/2025-01-26 18-26-25.mp3",
         "text": "data/ScrubNoob/2025-01-26 18-26-25.txt"
+    },
+    {
+        "audio": "data/ScrubNoob/1clip_5.mp3",
+        "text": "data/ScrubNoob/1clip_5.txt"
+    },
+    {
+        "audio": "data/ScrubNoob/1clip_7.mp3",
+        "text": "data/ScrubNoob/1clip_7.txt"
     },
     {
         "audio": "data/ScrubNoob/2025-01-26 18-25-12.mp3",
@@ -14,5 +38,13 @@
     {
         "audio": "data/ScrubNoob/2025-01-26 18-26-50.mp3",
         "text": "data/ScrubNoob/2025-01-26 18-26-50.txt"
+    },
+    {
+        "audio": "data/ScrubNoob/1clip_3.mp3",
+        "text": "data/ScrubNoob/1clip_3.txt"
+    },
+    {
+        "audio": "data/ScrubNoob/1clip_1.mp3",
+        "text": "data/ScrubNoob/1clip_1.txt"
     }
 ]

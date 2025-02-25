@@ -1,0 +1,1 @@
+ Revolver was potentially giving us a bit of haste. Like it was being hasted. It was activating every 1.5-ish seconds, not running out of ammo. Contribute storage our haste engine. Like, Nive wasn't doing anything there.

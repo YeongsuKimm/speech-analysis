@@ -1,0 +1,1 @@
+ Okay, we actually might be stabilizing here in terms of not having the frame made drops, and pauses and stuff.

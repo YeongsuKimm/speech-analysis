@@ -1,0 +1,1 @@
+ If it's more than the recommended, it'll re-render it at 6K.

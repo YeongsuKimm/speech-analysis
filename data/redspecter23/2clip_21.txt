@@ -1,0 +1,1 @@
+ I wanted to ask other people with this new feature there. You see the feature in the video that says when the screen isn't focused, it'll reduce your your frame rate, save on video memory and such, right? I was finding, since I'm running on two monitors right now, and streaming. If I went to the second monitor to do stream stuff, the first monitor would

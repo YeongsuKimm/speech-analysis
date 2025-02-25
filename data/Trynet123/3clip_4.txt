@@ -1,0 +1,1 @@
+ The way that I saw freeze before was that it kind of existed as a check on all of these boards that are trying to greedily funnel a bunch of things into one item. But now if you're just playing a large item, a lot of the freeze items don't even do that anymore, it's just the free skills. And I mean the free skills were historically a lot better than freeze items for the

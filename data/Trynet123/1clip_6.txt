@@ -1,0 +1,1 @@
+ Yeah, they're gonna try switching back to the other multi-stream plugins. I think the stream element's one is... screwing up my OBS.

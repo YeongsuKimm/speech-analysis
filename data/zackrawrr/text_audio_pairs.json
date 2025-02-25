@@ -1,7 +1,75 @@
 [
     {
-        "audio": "data/zackrawrr/2025-01-26 11-16-28.mp3",
-        "text": "data/zackrawrr/2025-01-26 11-16-28.txt"
+        "audio": "data/zackrawrr/1clip_13.mp3",
+        "text": "data/zackrawrr/1clip_13.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_5.mp3",
+        "text": "data/zackrawrr/1clip_5.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_17.mp3",
+        "text": "data/zackrawrr/1clip_17.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_8.mp3",
+        "text": "data/zackrawrr/1clip_8.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_14.mp3",
+        "text": "data/zackrawrr/1clip_14.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_7.mp3",
+        "text": "data/zackrawrr/1clip_7.txt"
+    },
+    {
+        "audio": "data/zackrawrr/2025-01-26 11-16-56.mp3",
+        "text": "data/zackrawrr/2025-01-26 11-16-56.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_1.mp3",
+        "text": "data/zackrawrr/1clip_1.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_4.mp3",
+        "text": "data/zackrawrr/1clip_4.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_16.mp3",
+        "text": "data/zackrawrr/1clip_16.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_20.mp3",
+        "text": "data/zackrawrr/1clip_20.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_9.mp3",
+        "text": "data/zackrawrr/1clip_9.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_18.mp3",
+        "text": "data/zackrawrr/1clip_18.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_15.mp3",
+        "text": "data/zackrawrr/1clip_15.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_19.mp3",
+        "text": "data/zackrawrr/1clip_19.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_12.mp3",
+        "text": "data/zackrawrr/1clip_12.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_2.mp3",
+        "text": "data/zackrawrr/1clip_2.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_0.mp3",
+        "text": "data/zackrawrr/1clip_0.txt"
     },
     {
         "audio": "data/zackrawrr/2025-01-26 11-17-38.mp3",
@@ -12,7 +80,23 @@
         "text": "data/zackrawrr/2025-01-26 11-15-50.txt"
     },
     {
-        "audio": "data/zackrawrr/2025-01-26 11-16-56.mp3",
-        "text": "data/zackrawrr/2025-01-26 11-16-56.txt"
+        "audio": "data/zackrawrr/1clip_10.mp3",
+        "text": "data/zackrawrr/1clip_10.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_6.mp3",
+        "text": "data/zackrawrr/1clip_6.txt"
+    },
+    {
+        "audio": "data/zackrawrr/2025-01-26 11-16-28.mp3",
+        "text": "data/zackrawrr/2025-01-26 11-16-28.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_11.mp3",
+        "text": "data/zackrawrr/1clip_11.txt"
+    },
+    {
+        "audio": "data/zackrawrr/1clip_3.mp3",
+        "text": "data/zackrawrr/1clip_3.txt"
     }
 ]

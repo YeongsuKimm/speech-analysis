@@ -1,0 +1,1 @@
+ I'm looking at the bandwidth from the task manager, it's just maxed out to what it's pulling. I don't really understand like how much bandwidth should a 720p live stream be taking. I have no idea, but it's did maxing out at 10 minutes or so.

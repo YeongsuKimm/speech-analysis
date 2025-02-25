@@ -1,0 +1,1 @@
+ Regression release is fine, just like two times speed. Definitely speed it up, yeah. It's slow.

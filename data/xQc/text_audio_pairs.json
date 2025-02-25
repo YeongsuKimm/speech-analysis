@@ -1,18 +1,574 @@
 [
     {
-        "audio": "data/xQc/2025-01-26 14-11-12.mp3",
-        "text": "data/xQc/2025-01-26 14-11-12.txt"
+        "audio": "data/xQc/2clip_22.mp3",
+        "text": "data/xQc/2clip_22.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_7.mp3",
+        "text": "data/xQc/3clip_7.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_5.mp3",
+        "text": "data/xQc/1clip_5.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_28.mp3",
+        "text": "data/xQc/2clip_28.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_40.mp3",
+        "text": "data/xQc/3clip_40.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_40.mp3",
+        "text": "data/xQc/1clip_40.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_14.mp3",
+        "text": "data/xQc/1clip_14.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_43.mp3",
+        "text": "data/xQc/2clip_43.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_27.mp3",
+        "text": "data/xQc/3clip_27.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_5.mp3",
+        "text": "data/xQc/3clip_5.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_11.mp3",
+        "text": "data/xQc/3clip_11.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_29.mp3",
+        "text": "data/xQc/1clip_29.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_17.mp3",
+        "text": "data/xQc/3clip_17.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_43.mp3",
+        "text": "data/xQc/3clip_43.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_20.mp3",
+        "text": "data/xQc/1clip_20.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_23.mp3",
+        "text": "data/xQc/3clip_23.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_42.mp3",
+        "text": "data/xQc/3clip_42.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_32.mp3",
+        "text": "data/xQc/2clip_32.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_9.mp3",
+        "text": "data/xQc/2clip_9.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_39.mp3",
+        "text": "data/xQc/2clip_39.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_20.mp3",
+        "text": "data/xQc/2clip_20.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_19.mp3",
+        "text": "data/xQc/1clip_19.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_0.mp3",
+        "text": "data/xQc/1clip_0.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_44.mp3",
+        "text": "data/xQc/2clip_44.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_5.mp3",
+        "text": "data/xQc/2clip_5.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_39.mp3",
+        "text": "data/xQc/1clip_39.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_16.mp3",
+        "text": "data/xQc/3clip_16.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_11.mp3",
+        "text": "data/xQc/2clip_11.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_33.mp3",
+        "text": "data/xQc/2clip_33.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_40.mp3",
+        "text": "data/xQc/2clip_40.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_30.mp3",
+        "text": "data/xQc/3clip_30.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_37.mp3",
+        "text": "data/xQc/1clip_37.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_45.mp3",
+        "text": "data/xQc/3clip_45.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_18.mp3",
+        "text": "data/xQc/2clip_18.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_41.mp3",
+        "text": "data/xQc/2clip_41.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_33.mp3",
+        "text": "data/xQc/1clip_33.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_3.mp3",
+        "text": "data/xQc/2clip_3.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_26.mp3",
+        "text": "data/xQc/2clip_26.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_47.mp3",
+        "text": "data/xQc/2clip_47.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_12.mp3",
+        "text": "data/xQc/3clip_12.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_31.mp3",
+        "text": "data/xQc/3clip_31.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_32.mp3",
+        "text": "data/xQc/3clip_32.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_24.mp3",
+        "text": "data/xQc/1clip_24.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_18.mp3",
+        "text": "data/xQc/3clip_18.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_17.mp3",
+        "text": "data/xQc/1clip_17.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_8.mp3",
+        "text": "data/xQc/2clip_8.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_6.mp3",
+        "text": "data/xQc/2clip_6.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_8.mp3",
+        "text": "data/xQc/1clip_8.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_35.mp3",
+        "text": "data/xQc/1clip_35.txt"
     },
     {
         "audio": "data/xQc/2025-01-26 14-10-43.mp3",
         "text": "data/xQc/2025-01-26 14-10-43.txt"
     },
     {
+        "audio": "data/xQc/2025-01-26 14-11-44.mp3",
+        "text": "data/xQc/2025-01-26 14-11-44.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_1.mp3",
+        "text": "data/xQc/1clip_1.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_10.mp3",
+        "text": "data/xQc/2clip_10.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_34.mp3",
+        "text": "data/xQc/1clip_34.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_23.mp3",
+        "text": "data/xQc/2clip_23.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_13.mp3",
+        "text": "data/xQc/3clip_13.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_2.mp3",
+        "text": "data/xQc/3clip_2.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_15.mp3",
+        "text": "data/xQc/1clip_15.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_31.mp3",
+        "text": "data/xQc/1clip_31.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_19.mp3",
+        "text": "data/xQc/3clip_19.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_12.mp3",
+        "text": "data/xQc/1clip_12.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_41.mp3",
+        "text": "data/xQc/3clip_41.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_35.mp3",
+        "text": "data/xQc/3clip_35.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_35.mp3",
+        "text": "data/xQc/2clip_35.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_31.mp3",
+        "text": "data/xQc/2clip_31.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_7.mp3",
+        "text": "data/xQc/2clip_7.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_4.mp3",
+        "text": "data/xQc/3clip_4.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_10.mp3",
+        "text": "data/xQc/3clip_10.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_25.mp3",
+        "text": "data/xQc/3clip_25.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_17.mp3",
+        "text": "data/xQc/2clip_17.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_38.mp3",
+        "text": "data/xQc/1clip_38.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_13.mp3",
+        "text": "data/xQc/2clip_13.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_46.mp3",
+        "text": "data/xQc/2clip_46.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_11.mp3",
+        "text": "data/xQc/1clip_11.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_13.mp3",
+        "text": "data/xQc/1clip_13.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_30.mp3",
+        "text": "data/xQc/2clip_30.txt"
+    },
+    {
+        "audio": "data/xQc/2025-01-26 14-11-12.mp3",
+        "text": "data/xQc/2025-01-26 14-11-12.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_41.mp3",
+        "text": "data/xQc/1clip_41.txt"
+    },
+    {
         "audio": "data/xQc/2025-01-26 14-12-08.mp3",
         "text": "data/xQc/2025-01-26 14-12-08.txt"
     },
     {
-        "audio": "data/xQc/2025-01-26 14-11-44.mp3",
-        "text": "data/xQc/2025-01-26 14-11-44.txt"
+        "audio": "data/xQc/3clip_6.mp3",
+        "text": "data/xQc/3clip_6.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_20.mp3",
+        "text": "data/xQc/3clip_20.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_36.mp3",
+        "text": "data/xQc/3clip_36.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_44.mp3",
+        "text": "data/xQc/3clip_44.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_38.mp3",
+        "text": "data/xQc/3clip_38.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_36.mp3",
+        "text": "data/xQc/2clip_36.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_36.mp3",
+        "text": "data/xQc/1clip_36.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_2.mp3",
+        "text": "data/xQc/2clip_2.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_9.mp3",
+        "text": "data/xQc/3clip_9.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_24.mp3",
+        "text": "data/xQc/2clip_24.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_9.mp3",
+        "text": "data/xQc/1clip_9.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_18.mp3",
+        "text": "data/xQc/1clip_18.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_1.mp3",
+        "text": "data/xQc/3clip_1.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_26.mp3",
+        "text": "data/xQc/3clip_26.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_47.mp3",
+        "text": "data/xQc/3clip_47.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_22.mp3",
+        "text": "data/xQc/1clip_22.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_27.mp3",
+        "text": "data/xQc/1clip_27.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_25.mp3",
+        "text": "data/xQc/2clip_25.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_42.mp3",
+        "text": "data/xQc/2clip_42.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_12.mp3",
+        "text": "data/xQc/2clip_12.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_6.mp3",
+        "text": "data/xQc/1clip_6.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_16.mp3",
+        "text": "data/xQc/2clip_16.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_46.mp3",
+        "text": "data/xQc/3clip_46.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_29.mp3",
+        "text": "data/xQc/3clip_29.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_21.mp3",
+        "text": "data/xQc/1clip_21.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_29.mp3",
+        "text": "data/xQc/2clip_29.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_3.mp3",
+        "text": "data/xQc/1clip_3.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_26.mp3",
+        "text": "data/xQc/1clip_26.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_4.mp3",
+        "text": "data/xQc/2clip_4.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_27.mp3",
+        "text": "data/xQc/2clip_27.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_0.mp3",
+        "text": "data/xQc/3clip_0.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_7.mp3",
+        "text": "data/xQc/1clip_7.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_28.mp3",
+        "text": "data/xQc/1clip_28.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_19.mp3",
+        "text": "data/xQc/2clip_19.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_34.mp3",
+        "text": "data/xQc/3clip_34.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_4.mp3",
+        "text": "data/xQc/1clip_4.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_21.mp3",
+        "text": "data/xQc/2clip_21.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_16.mp3",
+        "text": "data/xQc/1clip_16.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_21.mp3",
+        "text": "data/xQc/3clip_21.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_22.mp3",
+        "text": "data/xQc/3clip_22.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_34.mp3",
+        "text": "data/xQc/2clip_34.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_15.mp3",
+        "text": "data/xQc/2clip_15.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_24.mp3",
+        "text": "data/xQc/3clip_24.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_23.mp3",
+        "text": "data/xQc/1clip_23.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_39.mp3",
+        "text": "data/xQc/3clip_39.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_30.mp3",
+        "text": "data/xQc/1clip_30.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_15.mp3",
+        "text": "data/xQc/3clip_15.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_2.mp3",
+        "text": "data/xQc/1clip_2.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_25.mp3",
+        "text": "data/xQc/1clip_25.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_48.mp3",
+        "text": "data/xQc/3clip_48.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_10.mp3",
+        "text": "data/xQc/1clip_10.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_14.mp3",
+        "text": "data/xQc/3clip_14.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_37.mp3",
+        "text": "data/xQc/3clip_37.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_3.mp3",
+        "text": "data/xQc/3clip_3.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_0.mp3",
+        "text": "data/xQc/2clip_0.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_28.mp3",
+        "text": "data/xQc/3clip_28.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_1.mp3",
+        "text": "data/xQc/2clip_1.txt"
+    },
+    {
+        "audio": "data/xQc/1clip_32.mp3",
+        "text": "data/xQc/1clip_32.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_33.mp3",
+        "text": "data/xQc/3clip_33.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_14.mp3",
+        "text": "data/xQc/2clip_14.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_37.mp3",
+        "text": "data/xQc/2clip_37.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_38.mp3",
+        "text": "data/xQc/2clip_38.txt"
+    },
+    {
+        "audio": "data/xQc/2clip_45.mp3",
+        "text": "data/xQc/2clip_45.txt"
+    },
+    {
+        "audio": "data/xQc/3clip_8.mp3",
+        "text": "data/xQc/3clip_8.txt"
     }
 ]

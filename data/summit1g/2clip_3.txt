@@ -1,0 +1,1 @@
+ Alright, so first off we have this compound here. What I want you to focus on is this compound here and those trees up on the hill, okay? Okay. Object visibility is going to do the same thing as train visibility, but it's going to do it for all of the objects, objects being trees, not just like items that spawn in the world, but trees being buildings, being sheds.

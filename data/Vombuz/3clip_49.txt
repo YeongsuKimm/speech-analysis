@@ -1,0 +1,1 @@
+ Now all money we get is increased by 50%, but if we die, we lose it. So we really can die now.

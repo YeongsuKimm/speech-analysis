@@ -1,0 +1,1 @@
+ Trigger a level 20 spirit of com skill whenever a totem dies while you get enemies in your presence. What does that mean?
