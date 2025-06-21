@@ -40,6 +40,7 @@ import json
 def find_text_audio_pairs(root_folder: str):
     """Finds and saves pairs of text and audio files with the same name in each subfolder."""
     for subdir, _, files in os.walk(root_folder):
+        print(subdir)
         text_audio_pairs = []
         audio_files = {os.path.splitext(f)[0]: os.path.join(subdir, f) for f in files if f.endswith(".mp3")}
         text_files = {os.path.splitext(f)[0]: os.path.join(subdir, f) for f in files if f.endswith(".txt")}

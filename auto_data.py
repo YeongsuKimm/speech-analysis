@@ -15,34 +15,68 @@ def mkv_to_wav(input_file, output_file):
         ffmpeg.input(input_file, ss=0, t=1800).output(output_file, acodec='pcm_s16le', ar=44100, ac=2).run()
         print(f"Conversion successful: {output_file}")
     except ffmpeg.Error as e:
-        print(f"Error: {e}")
-        print(e.stderr.decode())
+        print(f"Error occurred: {e.stderr.decode()}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {str(e)}")
 
 def download_twitch_video(url, streamer_name):
     command = f"twitch-dl download {url}"
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, text=True)
-    time.sleep(3)
-    process.stdin.write('6\n')
-    process.stdin.flush()
-    stdout, stderr = process.communicate()
-    print("All tasks completed, running final command...")
-    subprocess.run(["echo", "Final cleanup command"])
+    
+    # Read the initial output to capture the options
+    stdout, stderr = process.communicate(timeout=5)
 
-    if stdout:
-        print("Download output:", stdout)
-        match = re.search(r"Downloaded: (\S+)", stdout)
+    # Look for the available options for video quality/resolution
+    options = []
+    for line in stdout.splitlines():
+        match = re.match(r"(\d+)\) (.+)", line)
         if match:
-            downloaded_file = match.group(1)
-            print("Downloaded file:", downloaded_file)
-            output_wav = f"data/{streamer_name}/output.wav"
-            mkv_to_wav(downloaded_file, output_wav)
-            os.remove(downloaded_file)
-            return output_wav
-        else:
-            print("File name not found in the output.")
-    if stderr:
-        print("Error Output:", stderr)
+            key = match.group(1)
+            option_name = match.group(2)
+            options.append((key, option_name))
+
+    # Find the key for 'Audio Only'
+    audio_only_key = None
+    for key, option_name in options:
+        if 'Audio Only' in option_name:
+            audio_only_key = key
+            break
+
+    if audio_only_key:
+        print(f"Selecting option: {audio_only_key} for 'Audio Only'")
+
+        # Start the process again to allow writing input and reading output
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, text=True)
+
+        # Send the audio-only option key
+        process.stdin.write(f"{audio_only_key}\n")
+        process.stdin.flush()
+
+        # Wait for the process to finish and get the output
+        stdout, stderr = process.communicate()
+
+        print("All tasks completed, running final command...")
+        # subprocess.run(["echo", "Final cleanup command"])
+
+        if stdout:
+            print("Download output:", stdout)
+            match = re.search(r"Downloaded: (\S+)", stdout)
+            if match:
+                downloaded_file = match.group(1)
+                print("Downloaded file:", downloaded_file)
+                output_wav = f"data/{streamer_name}/output.wav"
+                mkv_to_wav(downloaded_file, output_wav)
+                os.remove(downloaded_file)
+                return output_wav
+            else:
+                print("File name not found in the output.")
+        if stderr:
+            print("Error Output:", stderr)
+    else:
+        print("No 'Audio Only' option found.")
+    
     return None
+
 
 pipeline = SpeakerDiarization.from_pretrained("pyannote/speaker-diarization-3.1", use_auth_token="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")
 pipeline.to(torch.device("cuda"))
@@ -134,31 +168,58 @@ with open("failed.txt", "r") as file:
             failed.append(str(line))
 print(failed)
 
-# LACY IS NOT COMPLETE FIGURE OUT WHAT IS WRONG I THINK THE STREAM IS OUTDATED
-# NyyBeats ALSO
-for name in os.listdir("vods/"):
+streamers = []
+with open("test.txt", "r") as file:
+        for streamer in file:
+            streamers.append(streamer[:-1])
+
+# Divide into 2 equal batches
+batch_size = len(streamers) // 2
+
+batch1 = streamers[:batch_size]
+batch2 = streamers[batch_size:]
+
+# Print results
+print("Batch 1:", batch1)
+print("Batch 2:", batch2)
+
+for name in batch2:
     i=1
     if name not in completed:
-        with open(f"vods/{name}", "r") as file:
-            for line in file:
-                print(name)
-                try:
-                    main(line, name,i)
-                except BrokenPipeError:
-                    with open("completed.txt","a") as file2:
-                        file2.write("\n"+name)
-                    with open("failed.txt","a") as file2:
-                        file2.write("\n"+name)
-                    # rerun this file
-                    print(f"Error encountered. Restarting script in 5 seconds...")
-                    time.sleep(5)  # Optional delay before restart
+        print(name)
+        try:
+            with open(f"vods/{name}.txt", "r") as file:
+                for line in file:
+                    try:
+                        main(line, name,i)
+                    except BrokenPipeError and FileNotFoundError and ValueError:
+                        with open("completed.txt","a") as file2:
+                            file2.write("\n"+name)
+                        with open("failed.txt","a") as file2:
+                            file2.write("\n"+name)
+                        # rerun this file
+                        print(f"Error encountered. Restarting script in 5 seconds...")
+                        time.sleep(5)  # Optional delay before restart
 
-                    subprocess.run([sys.executable, "auto_data.py"])
-                i+=1;
+                        subprocess.run([sys.executable, "auto_data.py"])
+                        break
+                    i+=1;
+                with open("completed.txt","a") as file2:
+                    file2.write("\n"+name)
+        except:
             with open("completed.txt","a") as file2:
                 file2.write("\n"+name)
+            with open("failed.txt","a") as file2:
+                file2.write("\n"+name)
+            # rerun this file
+            print(f"Error encountered. Restarting script in 5 seconds...")
+            time.sleep(5)  # Optional delay before restart
+
+            subprocess.run([sys.executable, "auto_data.py"])
 
 from extract_text import process_audio_files
-from TextAudioPair import find_text_audio_pairs
-process_audio_files("data")
-find_text_audio_pairs("data")
+# from TextAudioPair import find_text_audio_pairs
+
+process_audio_files("data") 
+# find_text_audio_pairs("data")
+

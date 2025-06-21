@@ -13,9 +13,26 @@ def transcribe_audio(audio_path):
     
     return text_path
 
+
+streamers = []
+import os
+for streamer in os.listdir("data"):
+    streamers.append(streamer)
+
+print(streamers)
+
+batch_size = len(streamers) // 2
+batch1 = streamers[:batch_size]
+batch2 = streamers[batch_size:]
+
+# Print results
+print("Batch 1:", batch1)
+print("Batch 2:", batch2)
+
 def process_audio_files(root_folder: str):
     """Processes all audio files in subfolders, transcribing and saving text."""
     for subdir, _, files in os.walk(root_folder):
+        print(subdir)
         for file in files:
             if file.endswith(".mp3"):
                 audio_path = os.path.join(subdir, file)

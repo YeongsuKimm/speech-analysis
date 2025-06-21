@@ -13,4 +13,11 @@ whisper --help
 whisper audio.flac introduction.mp3 audio.wav --model tiny
 
 
+<<<<<<< HEAD
 twitch-dl download https://www.twitch.tv/videos/2382487755
+=======
+twitch-dl download https://www.twitch.tv/videos/2382487755
+
+
+Change the directory to files in the extraction and data collection between test and train
+>>>>>>> 1a44654e (back)
