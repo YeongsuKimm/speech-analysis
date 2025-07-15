@@ -5,12 +5,13 @@ import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader, Subset
 import h5py
 import numpy as np
+from sklearn.model_selection import KFold
 
 # Device setup
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Mode: "text", "audio", or "both"
-MODE = "both"
+MODE = "text"
 
 class StreamerDataset(Dataset):
     def __init__(self, root_dir, mode="both", norm_dir=None):
@@ -18,18 +19,18 @@ class StreamerDataset(Dataset):
         self.streamers = os.listdir(root_dir)
         self.mode = mode
         self.data = []
-        
+
         self.norm_params = {}
         if norm_dir:
             if mode in ["both", "text"]:
-                self.norm_params['text_mean'] = torch.tensor(np.load(f"{norm_dir}/text_reg_mean.npy"), dtype=torch.float32)
-                self.norm_params['text_std'] = torch.tensor(np.load(f"{norm_dir}/text_reg_std.npy"), dtype=torch.float32)
+                self.norm_params['text_mean'] = torch.tensor(np.load(f"{norm_dir}/fold_text_reg_mean.npy"), dtype=torch.float32)
+                self.norm_params['text_std'] = torch.tensor(np.load(f"{norm_dir}/fold_text_reg_std.npy"), dtype=torch.float32)
             if mode in ["both", "audio"]:
-                self.norm_params['audio_mean'] = torch.tensor(np.load(f"{norm_dir}/audio_reg_mean.npy"), dtype=torch.float32)
-                self.norm_params['audio_std'] = torch.tensor(np.load(f"{norm_dir}/audio_reg_std.npy"), dtype=torch.float32)
+                self.norm_params['audio_mean'] = torch.tensor(np.load(f"{norm_dir}/fold_audio_reg_mean.npy"), dtype=torch.float32)
+                self.norm_params['audio_std'] = torch.tensor(np.load(f"{norm_dir}/fold_audio_reg_std.npy"), dtype=torch.float32)
             if os.path.exists(f"{norm_dir}/label_mean.npy") and os.path.exists(f"{norm_dir}/label_std.npy"):
-                self.norm_params['label_mean'] = torch.tensor(np.load(f"{norm_dir}/label_mean.npy"), dtype=torch.float32)
-                self.norm_params['label_std'] = torch.tensor(np.load(f"{norm_dir}/label_std.npy"), dtype=torch.float32)
+                self.norm_params['label_mean'] = torch.tensor(np.load(f"{norm_dir}/fold_label_mean.npy"), dtype=torch.float32)
+                self.norm_params['label_std'] = torch.tensor(np.load(f"{norm_dir}/fold_label_std.npy"), dtype=torch.float32)
 
         for streamer in self.streamers:
             streamer_path = os.path.join(root_dir, streamer)
@@ -54,17 +55,16 @@ class StreamerDataset(Dataset):
             elif mode == "audio":
                 for audio_file in audio_files:
                     self.data.append((os.path.join(streamer_path, audio_file), target))
-    
+
     def __len__(self):
         return len(self.data)
-    
+
     def __getitem__(self, idx):
         if self.mode == "both":
             text_path, audio_path, target = self.data[idx]
             text_feat = self.load_h5_features(text_path)
             audio_feat = self.load_h5_features(audio_path)
 
-            # Normalize features if stats are loaded
             if 'text_mean' in self.norm_params and 'text_std' in self.norm_params:
                 text_feat = (text_feat - self.norm_params['text_mean']) / self.norm_params['text_std']
             if 'audio_mean' in self.norm_params and 'audio_std' in self.norm_params:
@@ -96,10 +96,8 @@ class StreamerDataset(Dataset):
 
     def load_h5_features(self, file_path):
         with h5py.File(file_path, "r") as f:
-            if "tensor" in f:
-                data = f["tensor"][()]
-        return torch.tensor(data, dtype=torch.float32).squeeze(0)
-    
+            return torch.tensor(f["tensor"][()], dtype=torch.float32).squeeze(0)
+
 class TextOnlyRegressor(nn.Module):
     def __init__(self, text_dim, hidden_dim, output_dim):
         super().__init__()
@@ -155,119 +153,86 @@ class MultiModalRegressor(nn.Module):
         fused = torch.cat((text_feat, audio_feat), dim=1)
         return self.fusion_mlp(fused)
 
-# Training function
-def train_model(model, train_loader, val_loader, epochs=10, lr=1e-4, device="cuda", mode="both"):
-    model.to(device)
+# Training
+
+def train_model(model, train_loader, val_loader, epochs=30, lr=1e-3, mode="text"):
+    model.to(DEVICE)
     optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
     criterion = nn.MSELoss()
 
     for epoch in range(epochs):
-        # Training phase
         model.train()
         train_loss = 0.0
         for batch in train_loader:
             optimizer.zero_grad()
             if mode == "both":
-                text, audio, target = batch
-                text, audio, target = text.to(device), audio.to(device), target.to(device)
+                text, audio, target = [b.to(DEVICE) for b in batch]
                 output = model(text, audio).squeeze()
             else:
-                inputs, target = batch
-                inputs, target = inputs.to(device), target.to(device)
+                inputs, target = [b.to(DEVICE) for b in batch]
                 output = model(inputs).squeeze()
             target = target.squeeze()
             loss = criterion(output, target)
             loss.backward()
-            
             optimizer.step()
-
             train_loss += loss.item()
-        train_loss /= len(train_loader)
 
-        # Validation phase
         model.eval()
         val_loss = 0.0
         with torch.no_grad():
             for batch in val_loader:
                 if mode == "both":
-                    text, audio, target = batch
-                    text, audio, target = text.to(device), audio.to(device), target.to(device)
+                    text, audio, target = [b.to(DEVICE) for b in batch]
                     output = model(text, audio).squeeze()
                 else:
-                    inputs, target = batch
-                    inputs, target = inputs.to(device), target.to(device)
+                    inputs, target = [b.to(DEVICE) for b in batch]
                     output = model(inputs).squeeze()
-                # print(output)
                 target = target.squeeze()
-                # print(target)
                 loss = criterion(output, target)
                 val_loss += loss.item()
-            val_loss /= len(val_loader)
 
-        print(f"Epoch {epoch+1}/{epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
+        print(f"Epoch {epoch+1}: Train Loss: {train_loss/len(train_loader):.4f}, Val Loss: {val_loss/len(val_loader):.4f}")
 
 
-# Main
 if __name__ == "__main__":
-    dataset_size = 127
-    batch_size = 16
-    epochs = 30
-    lr = 1e-3
+    dataset = StreamerDataset("processed", mode=MODE, norm_dir="norm_params")
+
+    TEXT_DIM = AUDIO_DIM = 768
+    HIDDEN_DIM = 128
+    OUTPUT_DIM = 1
+    BATCH_SIZE = 16
 
     fold_1 = ['xFSN_Saber', 'Zoomaa', 'zackrawrr', 'TheGeekEntry', 'Thiefs', 'TinaKitten', 'starsmitten', 'supertf', 'Sykkuno', 'robcdee', 'RTGame', 'SovietWomble', 'pupsker', 'Quin69', 'shroud', 'omareloff', 'PirateSoftware', 'RanbooLive', 'miia', 'pashaBiceps', 'nl_Kripp', 'LotharHS', 'MOONMOON', 'NateHill', 'kyliebitkin', 'LVNDMARK', 'Ludwig', 'jordansisco_', 'kyootbot', 'lilypichu', 'iLumpE', 'jasontheween', 'Joe_Bartolozzi', 'Glorious_E', 'Gorgc', 'iiTzTimmy', 'DGthe99', 'filian', 'Flight23white', 'cjya', 'Elajjaz', 'DisguisedToast', 'BrownGotti', 'Caedrel', 'Castro_1021', 'BennyCentral', 'A_Seagull', 'BobRoss', 'ahmpy']
     fold_2 = ['Wicked', 'vedal987', 'yourragegaming', 'T90Official', 'thesketchreal', 'TimTheTatman', 'Sideshow', 'SMii7Y', 'Sweet_Anita', 'redspecter23', 'RDCgaming', 'Sommerset', 'Psychoghost', 'QuarterJade', 'ShahZaM', 'NyyBeats', 'Pikabooirl', 'Rainbow6', 'MataraKan', 'Northernlion', 'Ninja', 'LFToxy_val', 'Mendo', 'Nadeshot', 'KmartPoker', 'LuluLuvely', 'LTANorth', 'JayOddity', 'Kitboga', 'Kyedae', 'hypnoshark', 'itsSpoit', 'JackManifoldTV', 'Geef', 'GoldGlove', 'Hiko', 'DEFAC3D', 'ExtraEmily', 'Fanum', 'Casson', 'Dyrus', 'CohhCarnage', 'BreesKnees', 'BrookeAB', 'caseoh_', 'Beardageddon', 'Aztecross', 'benjyfishy', 'Adapt']
     fold_3 = ['Vombuz', 'Valkyrae', 'xQc', 'survivalistaoe2de', 'Thebausffs', 'TenZ', 'Shotz', 'SmallAnt', 'SwaggerSouls', 'RedOpz', 'Ray__C', 'sodapoppin', 'PENTA', 'Punz', 'scump', 'MurderCrumpet', 'peterpark', 'plaqueboymax', 'MaryMaybe', 'Nmplol', 'Nihachu', 'LAXHAWTHORN007', 'MeatyMarley', 'MrSavage', 'KingWoolz', 'Lord_Kebun', 'loltyler1', 'Jacque', 'Keeoh', 'KaiCenat', 'huncho', 'Insym', 'ironmouse', 'Fannsy', 'GernaderJake', 'HasanAbi', 'd0cc_tv', 'EsfandTV', 'Emiru', 'carmen', 'chocoTaco', 'cloakzy', 'BreaK', 'BobbyPoffGaming', 'CaptainSparklez', 'BarbarousKing', 'AuzioMF', 'BadBoyHalo', '39daph']        
     fold_4 = ['Trynet123', 'Trick2g', 'x2Twins', 'Sterdekie', 'Terroriser', 'tarik', 'Shapaz', 'sapnaplive', 'summit1g', 'Rallied', 'Ray', 'sneakylol', 'p4perback', 'PontiacMadeDDG', 'ScreaM', 'mollozhang', 'Pestily', 'Philza', 'MARI', 'Necros', 'Nightblue3', 'LanceMcDonald', 'Maximilian_DOOD', 'moistcr1tikal', 'KidShadoe', 'lilsimsie', 'Loeya', 'J4CKIECHAN', 'k3soju', 'Jynxzi', 'HollywoodBob', 'iddqd', 'ImperialHal__', 'Everretta', 'fuslie', 'Gosu', 'crazyjapanese', 'erobb221', 'Duke', 'capturesca', 'Chap', 'Clix', 'Blue_Squadron', 'Bigpuffer', 'broxh_', 'AxialMatt', 'AussieAntics', 'Aydan', 'aceu']
     test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
+    
+    all_folds = [fold_1, fold_2, fold_3, fold_4]
 
+    # Make a mapping from streamer name to sample indices
     dataset = StreamerDataset("processed/", mode=MODE, norm_dir="norm_params")
 
-    streamer_to_indices = {}
-    for idx, item in enumerate(dataset.data):
-        if MODE == "both":
-            path = item[0]  # text path
+    for fold_idx in range(4):
+        val_streamers = all_folds[fold_idx]
+        train_streamers = [s for i, f in enumerate(all_folds) if i != fold_idx for s in f]
+
+        train_indices = [i for i, entry in enumerate(dataset.data) if any(s in entry[0] for s in train_streamers)]
+        val_indices = [i for i, entry in enumerate(dataset.data) if any(s in entry[0] for s in val_streamers)]
+
+        print(f"\n--- Fold {fold_idx + 1} ---")
+        print(f"Train streamers: {len(train_streamers)}, Validation streamers: {len(val_streamers)}")
+        print(f"Train samples: {len(train_indices)}, Validation samples: {len(val_indices)}")
+
+        train_loader = DataLoader(Subset(dataset, train_indices), batch_size=16, shuffle=True)
+        val_loader = DataLoader(Subset(dataset, val_indices), batch_size=16, shuffle=True)
+
+        if MODE == "text":
+            model = TextOnlyRegressor(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
+        elif MODE == "audio":
+            model = AudioOnlyRegressor(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
         else:
-            path = item[0]  # text or audio path
-        streamer_name = os.path.basename(os.path.dirname(path))
-        if streamer_name not in streamer_to_indices:
-            streamer_to_indices[streamer_name] = []
-        streamer_to_indices[streamer_name].append(idx)
+            model = MultiModalRegressor(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
 
-    train_streamers = []
-    train_streamers.extend(fold_1)
-    train_streamers.extend(fold_2)
-    train_streamers.extend(fold_3)
-    val_streamers = fold_4.copy()
-
-    val_indices = [idx for s in val_streamers for idx in streamer_to_indices.get(s, [])]
-    train_indices = [idx for s in train_streamers for idx in streamer_to_indices.get(s, [])]
-
-    train_subset = torch.utils.data.Subset(dataset, train_indices)
-    val_subset = torch.utils.data.Subset(dataset, val_indices)
-
-    train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False)
-
-    print(f"Train streamers: {len(train_streamers)}, Validation streamers: {len(val_streamers)}")
-    print(f"Train samples: {len(train_indices)}, Validation samples: {len(val_indices)}")
-
-    # Model selection
-    TEXT_DIM = AUDIO_DIM = 768
-    HIDDEN_DIM = 128
-    OUTPUT_DIM = 1
-
-    if MODE == "text":
-        model = TextOnlyRegressor(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "text_only_reg_model_normalized_t70-3.pth"
-    elif MODE == "audio":
-        model = AudioOnlyRegressor(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "audio_only_reg_model_normalized_t70-3.pth"
-    else:
-        model = MultiModalRegressor(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "streamer_reg_model_normalized_t70-3.pth"
-    print(model_name)
-    # Train & save
-    train_model(model, train_loader, val_loader, epochs=epochs, lr=lr, mode=MODE)
-    model_path = f"models/{model_name}"
-    torch.save(model.state_dict(), model_path)
-    print(f"Model saved to {model_path}")
+        train_model(model, train_loader, val_loader, epochs=30, lr=1e-3, mode=MODE)
+        torch.save(model.state_dict(), f"models/fold_reg_{fold_idx+1}_{MODE}_model.pth")

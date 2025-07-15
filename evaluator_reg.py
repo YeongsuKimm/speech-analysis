@@ -84,4 +84,3 @@ if __name__ == "__main__":
     # Example: print first 5 predictions vs targets
     for i in range(5):
         print(f"Pred: {preds[i].item():.3f}, Target: {targets[i].item():.3f}")
-

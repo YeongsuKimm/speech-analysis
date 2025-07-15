@@ -9,7 +9,7 @@ def get_dict(streamer_list):
         element["streamer"] = streamer
         with open(f"data/{streamer}/{streamer}.txt", "r+") as f:
             for line in f:
-                if "Total Followers:" in line:
+                if "Total Followers:" in line or "Followers:" in line:
                     raw_value = line.split(":")[1].strip()
                     try:
                         count = int(raw_value)

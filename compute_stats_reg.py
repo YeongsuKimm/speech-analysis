@@ -98,15 +98,15 @@ def compute_and_save_stats(dataset, mode="both", save_dir="norm_params"):
         text_feats = np.stack(text_feats)
         text_mean = text_feats.mean(axis=0)
         text_std = text_feats.std(axis=0) + 1e-8
-        np.save(os.path.join(save_dir, "text_reg_mean.npy"), text_mean)
-        np.save(os.path.join(save_dir, "text_reg_std.npy"), text_std)
+        np.save(os.path.join(save_dir, "fold_text_reg_mean.npy"), text_mean)
+        np.save(os.path.join(save_dir, "fold_text_reg_std.npy"), text_std)
         print("Saved text mean and std.")
     if audio_feats:
         audio_feats = np.stack(audio_feats)
         audio_mean = audio_feats.mean(axis=0)
         audio_std = audio_feats.std(axis=0) + 1e-8
-        np.save(os.path.join(save_dir, "audio_reg_mean.npy"), audio_mean)
-        np.save(os.path.join(save_dir, "audio_reg_std.npy"), audio_std)
+        np.save(os.path.join(save_dir, "fold_audio_reg_mean.npy"), audio_mean)
+        np.save(os.path.join(save_dir, "fold_audio_reg_std.npy"), audio_std)
         print("Saved audio mean and std.")
 
 def compute_and_save_label_stats(dataset, save_dir="norm_params"):
@@ -123,8 +123,8 @@ def compute_and_save_label_stats(dataset, save_dir="norm_params"):
     label_std = targets_tensor.std()
 
     os.makedirs(save_dir, exist_ok=True)
-    np.save(os.path.join(save_dir, "label_mean.npy"), label_mean.numpy())
-    np.save(os.path.join(save_dir, "label_std.npy"), label_std.numpy())
+    np.save(os.path.join(save_dir, "fold_label_mean.npy"), label_mean.numpy())
+    np.save(os.path.join(save_dir, "fold_label_std.npy"), label_std.numpy())
 
 if __name__ == "__main__":
     MODE = "both"

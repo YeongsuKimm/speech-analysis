@@ -6,6 +6,7 @@ from torch.utils.data import Dataset, DataLoader, random_split
 from classification import get_dict
 import h5py
 import numpy as np
+from sklearn.model_selection import KFold
 
 
 # Device setup
@@ -46,11 +47,11 @@ class StreamerDataset(Dataset):
                     self.data.append((audio_path, label))
         if normalize:
             if mode in ["text", "both"]:
-                self.mean_text = torch.tensor(np.load("norm_params/text_class_mean.npy"), dtype=torch.float32)
-                self.std_text = torch.tensor(np.load("norm_params/text_class_std.npy"), dtype=torch.float32)
+                self.mean_text = torch.tensor(np.load(f"norm_params/fold_text_class_mean.npy"), dtype=torch.float32)
+                self.std_text = torch.tensor(np.load(f"norm_params/fold_text_class_std.npy"), dtype=torch.float32)
             if mode in ["audio", "both"]:
-                self.mean_audio = torch.tensor(np.load("norm_params/audio_class_mean.npy"), dtype=torch.float32)
-                self.std_audio = torch.tensor(np.load("norm_params/audio_class_std.npy"), dtype=torch.float32)
+                self.mean_audio = torch.tensor(np.load(f"norm_params/fold_audio_class_mean.npy"), dtype=torch.float32)
+                self.std_audio = torch.tensor(np.load(f"norm_params/fold_audio_class_std.npy"), dtype=torch.float32)
 
     def __len__(self):
         return len(self.data)
@@ -66,6 +67,7 @@ class StreamerDataset(Dataset):
             if self.normalize:
                 text_features = (text_features - self.mean_text) / (self.std_text + 1e-8)
                 audio_features = (audio_features - self.mean_audio) / (self.std_audio + 1e-8)
+            # print(text_path)
             label = torch.tensor(label, dtype=torch.long)
             return text_features, audio_features, label
 
@@ -197,6 +199,9 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, num_epoch
                 loss = criterion(outputs, labels)
                 val_loss += loss.item()
                 preds = torch.argmax(outputs, dim=1)
+                # print("p")
+                # print(preds)
+                # print(labels)
                 val_correct += (preds == labels).sum().item()
                 val_total += labels.size(0)
 
@@ -208,13 +213,14 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, num_epoch
         print(f"  Val   Loss: {val_loss:.4f}, Val   Acc: {val_acc:.2f}%")
 
 
+
 if __name__ == "__main__":
     # Parameters
     TEXT_DIM = AUDIO_DIM = 768
     HIDDEN_DIM = 128
     OUTPUT_DIM = 3
     BATCH_SIZE = 16
-    NUM_EPOCHS = 30
+    NUM_EPOCHS = 20
     LR = 1e-3
 
     fold_1 = ['xFSN_Saber', 'Zoomaa', 'zackrawrr', 'TheGeekEntry', 'Thiefs', 'TinaKitten', 'starsmitten', 'supertf', 'Sykkuno', 'robcdee', 'RTGame', 'SovietWomble', 'pupsker', 'Quin69', 'shroud', 'omareloff', 'PirateSoftware', 'RanbooLive', 'miia', 'pashaBiceps', 'nl_Kripp', 'LotharHS', 'MOONMOON', 'NateHill', 'kyliebitkin', 'LVNDMARK', 'Ludwig', 'jordansisco_', 'kyootbot', 'lilypichu', 'iLumpE', 'jasontheween', 'Joe_Bartolozzi', 'Glorious_E', 'Gorgc', 'iiTzTimmy', 'DGthe99', 'filian', 'Flight23white', 'cjya', 'Elajjaz', 'DisguisedToast', 'BrownGotti', 'Caedrel', 'Castro_1021', 'BennyCentral', 'A_Seagull', 'BobRoss', 'ahmpy']
@@ -222,16 +228,19 @@ if __name__ == "__main__":
     fold_3 = ['Vombuz', 'Valkyrae', 'xQc', 'survivalistaoe2de', 'Thebausffs', 'TenZ', 'Shotz', 'SmallAnt', 'SwaggerSouls', 'RedOpz', 'Ray__C', 'sodapoppin', 'PENTA', 'Punz', 'scump', 'MurderCrumpet', 'peterpark', 'plaqueboymax', 'MaryMaybe', 'Nmplol', 'Nihachu', 'LAXHAWTHORN007', 'MeatyMarley', 'MrSavage', 'KingWoolz', 'Lord_Kebun', 'loltyler1', 'Jacque', 'Keeoh', 'KaiCenat', 'huncho', 'Insym', 'ironmouse', 'Fannsy', 'GernaderJake', 'HasanAbi', 'd0cc_tv', 'EsfandTV', 'Emiru', 'carmen', 'chocoTaco', 'cloakzy', 'BreaK', 'BobbyPoffGaming', 'CaptainSparklez', 'BarbarousKing', 'AuzioMF', 'BadBoyHalo', '39daph']        
     fold_4 = ['Trynet123', 'Trick2g', 'x2Twins', 'Sterdekie', 'Terroriser', 'tarik', 'Shapaz', 'sapnaplive', 'summit1g', 'Rallied', 'Ray', 'sneakylol', 'p4perback', 'PontiacMadeDDG', 'ScreaM', 'mollozhang', 'Pestily', 'Philza', 'MARI', 'Necros', 'Nightblue3', 'LanceMcDonald', 'Maximilian_DOOD', 'moistcr1tikal', 'KidShadoe', 'lilsimsie', 'Loeya', 'J4CKIECHAN', 'k3soju', 'Jynxzi', 'HollywoodBob', 'iddqd', 'ImperialHal__', 'Everretta', 'fuslie', 'Gosu', 'crazyjapanese', 'erobb221', 'Duke', 'capturesca', 'Chap', 'Clix', 'Blue_Squadron', 'Bigpuffer', 'broxh_', 'AxialMatt', 'AussieAntics', 'Aydan', 'aceu']
     test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
-    
+    folds = [fold_1, fold_2, fold_3, fold_4]
+
     combined = fold_1.copy()
     combined.extend(fold_2)
     combined.extend(fold_3)
     combined.extend(fold_4)
     combined.extend(test)
+    streamer_list=combined
 
     label_dict = get_dict(combined)
     dataset = StreamerDataset(root_dir="processed", label_dict=label_dict, mode=MODE, normalize=True)
 
+    # Make a mapping from streamer name to sample indices
     streamer_to_indices = {}
     for idx, item in enumerate(dataset.data):
         if MODE == "both":
@@ -243,39 +252,59 @@ if __name__ == "__main__":
             streamer_to_indices[streamer_name] = []
         streamer_to_indices[streamer_name].append(idx)
 
-    train_streamers = []
-    train_streamers.extend(fold_1)
-    train_streamers.extend(fold_2)
-    train_streamers.extend(fold_3)
-    val_streamers = fold_4.copy()
+    accuracies = []
+    K = 4
 
-    val_indices = [idx for s in val_streamers for idx in streamer_to_indices.get(s, [])]
-    train_indices = [idx for s in train_streamers for idx in streamer_to_indices.get(s, [])]
+    for fold in range(K):
+        val_streamers = set(folds[fold])
+        train_streamers = set.union(*[set(folds[i]) for i in range(K) if i != fold])
 
-    train_subset = torch.utils.data.Subset(dataset, train_indices)
-    val_subset = torch.utils.data.Subset(dataset, val_indices)
+        val_indices = [idx for s in val_streamers for idx in streamer_to_indices.get(s, [])]
+        train_indices = [idx for s in train_streamers for idx in streamer_to_indices.get(s, [])]
 
-    train_loader = DataLoader(train_subset, batch_size=BATCH_SIZE, shuffle=True)
-    val_loader = DataLoader(val_subset, batch_size=BATCH_SIZE, shuffle=False)
+        print(f"\n--- Fold {fold + 1} ---")
+        print(f"Train streamers: {len(train_streamers)}, Validation streamers: {len(val_streamers)}")
+        print(f"Train samples: {len(train_indices)}, Validation samples: {len(val_indices)}")
 
-    print(f"Train streamers: {len(train_streamers)}, Validation streamers: {len(val_streamers)}")
-    print(f"Train samples: {len(train_indices)}, Validation samples: {len(val_indices)}")
+        train_subset = torch.utils.data.Subset(dataset, train_indices)
+        val_subset = torch.utils.data.Subset(dataset, val_indices)
 
-    if MODE == "text":
-        model = TextOnlyMLP(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "text_only_class_model_normalized_t70-3.pth"
-    elif MODE == "audio":
-        model = AudioOnlyMLP(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "audio_only_class_model_normalized_t70-3.pth"
-    else:
-        model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "streamer_class_model_normalized_t70-3.pth"
+        train_loader = DataLoader(train_subset, batch_size=BATCH_SIZE, shuffle=True)
+        val_loader = DataLoader(val_subset, batch_size=BATCH_SIZE, shuffle=True)
 
-    optimizer = optim.Adam(model.parameters(), lr=LR)
-    criterion = nn.CrossEntropyLoss()
+        if MODE == "text":
+            model = TextOnlyMLP(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
+        elif MODE == "audio":
+            model = AudioOnlyMLP(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
+        else:
+            model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
 
-    train_model(model, train_loader, val_loader, optimizer, criterion, num_epochs=NUM_EPOCHS)
+        optimizer = optim.Adam(model.parameters(), lr=LR)
+        criterion = nn.CrossEntropyLoss()
 
-    model_path = f"models/{model_name}"
-    torch.save(model.state_dict(), model_path)
-    print(f"Model saved to {model_path}")
+        train_model(model, train_loader, val_loader, optimizer, criterion, num_epochs=NUM_EPOCHS)
+
+        # Evaluate on val set
+        model.eval()
+        correct = 0
+        total = 0
+        with torch.no_grad():
+            for batch in val_loader:
+                if MODE == "both":
+                    text, audio, labels = batch
+                    text, audio, labels = text.to(DEVICE), audio.to(DEVICE), labels.to(DEVICE)
+                    outputs = model(text, audio)
+                else:
+                    inputs, labels = batch
+                    inputs, labels = inputs.to(DEVICE), labels.to(DEVICE)
+                    outputs = model(inputs)
+
+                preds = torch.argmax(outputs, dim=1)
+                correct += (preds == labels).sum().item()
+                total += labels.size(0)
+        acc = correct / total * 100
+        accuracies.append(acc)
+        print(f"Fold {fold + 1} Final Accuracy: {acc:.2f}%")
+        torch.save(model.state_dict(), f"models/{MODE}_class_model_fold_{fold + 1}.pt")
+
+    print(f"\n=== Average Accuracy across {K} folds: {np.mean(accuracies):.2f}% ===")

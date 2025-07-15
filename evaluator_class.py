@@ -47,13 +47,14 @@ class Evaluator:
                     inputs, labels = batch
                     inputs, labels = inputs.to(self.device), labels.to(self.device)
                     outputs = self.model(inputs)
-                # print(outputs)
+                print(labels)
                 loss = self.criterion(outputs, labels)
                 total_loss += loss.item() * labels.size(0)
 
                 preds = torch.argmax(outputs, dim=1)
                 total_correct += (preds == labels).sum().item()
                 total_samples += labels.size(0)
+                print(preds)
 
         avg_loss = total_loss / total_samples
         accuracy = (total_correct / total_samples) * 100
@@ -115,7 +116,6 @@ class StreamerDataset(Dataset):
             if self.normalize:
                 text_features = (text_features - self.mean_text) / self.std_text
                 audio_features = (audio_features - self.mean_audio) / self.std_audio
-
             label = torch.tensor(label, dtype=torch.long)
             return text_features, audio_features, label
 
@@ -134,6 +134,7 @@ class StreamerDataset(Dataset):
                 audio_features = torch.tensor(np.array(f['tensor']), dtype=torch.float32).squeeze(0)
             if self.normalize:
                 audio_features = (audio_features - self.mean_audio) / self.std_audio
+            # print(audio_path)
             label = torch.tensor(label, dtype=torch.long)
             return audio_features, label
 
@@ -165,7 +166,7 @@ if __name__ == "__main__":
     label_dict = get_dict(streamer_list)
 
     dataset = StreamerDataset(root_dir=".test", label_dict=label_dict, mode=MODE, normalize=NORMALIZE)
-    data_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+    data_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False)
 
     model = load_model(MODE, DEVICE)
     criterion = nn.CrossEntropyLoss()

@@ -409,69 +409,80 @@
 #         continue
 
 
-import os
-import shutil
+# import shutil
+# import os
+# from classification import get_dict
+# streamer_list = os.listdir("processed")
+
+# # streamer_list.append(os.listdir(".test"))
+# streamer_list2 = os.listdir(".test")
+# # streamer_list.extend(streamer_list2)
+# label_dict = get_dict(streamer_list)
+# # print(label_dict)
+# one = []
+# two = []
+# three = []
+# for i in label_dict:
+#     if label_dict[i]==0:
+#         one.append(i)
+#     elif label_dict[i]==1:
+#         two.append(i)
+#     elif label_dict[i]==2:
+#         three.append(i)
+#     else:
+#         print(i)
+#         print(label_dict[i])
+# print(len(one))
+# print(len(two))
+# print(len(three))
+# print()
 
 
 
-import os
-from classification import get_dict
-streamer_list = os.listdir("processed")
+def distribute_three_lists_into_five_parts(list1, list2, list3):
+    all_items = [
+        ("list1", item) for item in list1
+    ] + [
+        ("list2", item) for item in list2
+    ] + [
+        ("list3", item) for item in list3
+    ]
 
-# streamer_list.append(os.listdir(".test"))
-streamer_list2 = os.listdir(".test")
-# streamer_list.extend(streamer_list2)
-label_dict = get_dict(streamer_list2)
+    total = len(all_items)  # 244
+    base_chunk = total // 5
+    remainder = total % 5  # some groups will get 1 extra
 
-one = []
-two = []
-three = []
-for i in label_dict:
-    if label_dict[i]==0:
-        one.append(i)
-    elif label_dict[i]==1:
-        two.append(i)
-    else:
-        three.append(i)
-print(len(one))
-print(len(two))
-print(len(three))
+    parts = [[] for _ in range(5)]
+    idx = 0
+    for i in range(5):
+        size = base_chunk + (1 if i < remainder else 0)
+        for _ in range(size):
+            parts[i].append(all_items[idx][1])
+            idx += 1
 
-test = []
-test.append(one.pop(0))
-for i in range(18):
-    test.append(one.pop(0))
-    test.append(two.pop(0))
-    test.append(three.pop(0))
+    return parts
 
-print(len(test))
-print(len(one))
-print(len(two))
-print(len(three))
-print(test)
+
+# parts = distribute_three_lists_into_five_parts(one,two,three)
+# # print(len(parts))
+
+# fold_1 = parts[0]
+# fold_2 = parts[1]
+# fold_3 = parts[2]
+# fold_4 = parts[3]
+# test = parts[4]
+
+# print(fold_1)
+# print(fold_2)
+# print(fold_3)
+# print(fold_4)
+# print(test)
+
+# print(distribution(fold_1))
 
 # test = []
 
 # Count all folders in "processed"
-processed_folders = os.listdir("processed")
-print(f"Total folders in 'processed/': {len(processed_folders)}")
-
-test_folders = os.listdir(".test")
-print(f"Total folders in '.test/': {len(test_folders)}")
-# Move test streamers to .test folder
-for name in test:
-    source_folder = os.path.join("processed", name)
-    destination_folder = os.path.join(".test", name)
-
-    if not os.path.exists(source_folder):
-        print(f"❌ {name} not found in processed/")
-        continue
-
-    try:
-        shutil.move(source_folder, destination_folder)
-        print(f"✅ Moved {name} to .test/")
-    except Exception as e:
-        print(f"⚠️ Error moving {name}: {e}")
 
 
 # for name in test_folders:
@@ -512,4 +523,140 @@ for name in test:
         
 # print(mset)
 
+import os
+# streamers = os.listdir("processed")
+# print(streamers)
+# print(len(streamers))
+# for streamer in os.listdir("processed"):
+#     for name in os.listdir(f"processed/{streamer}"):
+#         if name.endswith(".pt"):
+#             file_path = os.path.join("processed", streamer, name)
+#             # print(name)
+#             os.remove(file_path)
+#             print(f"Deleted: {file_path}")
 
+# processed_folders = os.listdir("processed")
+# print(f"Total folders in 'processed/': {len(processed_folders)}")
+# import shutil
+# import os
+# test_folders = os.listdir(".test")
+# # print(test_folders)
+# print(f"Total folders in '.test/': {len(test_folders)}")
+# # Move test streamers to .test folder
+# for name in test_folders:
+#     source_folder = os.path.join(".test", name)
+#     destination_folder = os.path.join("processed", name)
+
+#     if not os.path.exists(source_folder):
+#         print(f"❌ {name} not found in processed/")
+#         continue
+
+#     try:
+#         shutil.move(source_folder, destination_folder)
+#         print(f"✅ Moved {name} to .test/")
+#     except Exception as e:
+#         print(f"⚠️ Error moving {name}: {e}")
+
+
+
+import os
+from classification import get_dict
+
+combined = os.listdir('processed')
+fold_1 = []
+fold_2 = []
+fold_3 = []
+fold_4 = []
+test = []
+
+def distribution(streamer_list):
+    label_dict = get_dict(combined)
+    one = []
+    two = []
+    three = []
+    for i in streamer_list:
+        if label_dict[i]==0:
+            one.append(i)
+        elif label_dict[i]==1:
+            two.append(i)
+        elif label_dict[i]==2:
+            three.append(i)
+        else:
+            print(i)
+            print(label_dict[i])
+    print(len(one))
+    print(len(two))
+    print(len(three))
+
+label_dict = get_dict(combined)
+one = []
+two = []
+three = []
+for i in label_dict:
+    if label_dict[i]==0:
+        one.append(i)
+    elif label_dict[i]==1:
+        two.append(i)
+    elif label_dict[i]==2:
+        three.append(i)
+    else:
+        print(i)
+        print(label_dict[i])
+
+while(len(one) >= 5):
+    fold_1.append(one.pop())
+    fold_2.append(one.pop())
+    fold_3.append(one.pop())
+    fold_4.append(one.pop())
+    test.append(one.pop())
+    
+    fold_1.append(two.pop())
+    fold_2.append(two.pop())
+    fold_3.append(two.pop())
+    fold_4.append(two.pop())
+    test.append(two.pop())
+    
+    fold_1.append(three.pop())
+    fold_2.append(three.pop())
+    fold_3.append(three.pop())
+    fold_4.append(three.pop())
+    test.append(three.pop())
+
+
+fold_1.append(one.pop())
+fold_2.append(two.pop())
+fold_3.append(two.pop())
+fold_4.append(three.pop())
+
+print(len(fold_1))
+print(len(fold_2))
+print(len(fold_3))
+print(len(fold_4))
+print(len(test))    
+
+one = 0
+two = 0
+three = 0
+label_dict = get_dict(combined)
+
+print(fold_1)
+print(fold_2)
+print(fold_3)
+print(fold_4)
+print(test)
+
+# for streamer in combined:
+#     print(streamer +": " + str(len(os.listdir(f"data/{streamer}"))) + " (" +str(label_dict[streamer]) + ")")
+#     if label_dict[streamer] == 0:
+#         one += len(os.listdir(f"data/{streamer}"))
+#     if label_dict[streamer] == 1:
+#         two += len(os.listdir(f"data/{streamer}"))
+#     if label_dict[streamer] == 2:
+#         three += len(os.listdir(f"data/{streamer}"))
+#     # if len(os.listdir(f"processed/{streamer}")) == 1:
+#     #     with open("todo.txt", "a") as file:
+#     #         file.write(streamer+"\n")
+# print(one)
+# print(two)
+# print(three)
+# print(len(combined))

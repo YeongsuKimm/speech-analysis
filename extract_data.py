@@ -9,6 +9,8 @@ import torch.nn as nn
 import torch.optim as optim
 import numpy as np
 import torchaudio.transforms as transforms
+import h5py
+
 
 DATA_DIR = "data"
 SAVE_DIR ="processed"
@@ -116,8 +118,8 @@ def process_streamer(streamer):
 
     print(f"Processed: {streamer}")
 
+
 def process_streamer_metadata(streamer):
-    print("Processing: " + streamer)
     streamer_path = os.path.join(DATA_DIR, streamer)
     metadata_path = os.path.join(streamer_path, f"{streamer}.txt")
     print(streamer_path)
@@ -130,7 +132,6 @@ def process_streamer_metadata(streamer):
                 metadata[key] = float(value)  # Convert numeric metadata
             except ValueError:
                 metadata[key] = value  
-                
 
     try:
         current_subscribers = float(metadata.get("Current Subscribers", 0))
@@ -145,7 +146,7 @@ def process_streamer_metadata(streamer):
     log_peak_subscribers = max(0, np.log10(peak_subscribers))
 
     try:
-        followers = float(metadata.get("Total Followers", 0))
+        followers = float(metadata.get("Total Followers", metadata.get("Followers", 0)))
     except:
         followers = 0
     log_followers = max(0, np.log10(followers))
@@ -154,46 +155,52 @@ def process_streamer_metadata(streamer):
     save_path = os.path.join(SAVE_DIR, streamer)
     os.makedirs(save_path, exist_ok=True)
     
-    metadata_tensor = torch.tensor([log_current_subscribers, log_peak_subscribers, log_followers], dtype=torch.float32)
-    torch.save(metadata_tensor, os.path.join(save_path, "metadata.pt"))
+    metadata_array = np.array([log_current_subscribers, log_peak_subscribers, log_followers], dtype=np.float32)
+    
+    h5_path = os.path.join(save_path, "metadata.h5")
+    with h5py.File(h5_path, "w") as hf:
+        hf.create_dataset("tensor", data=metadata_array)
 
-    print(f"Processed: {streamer}")
+    print(log_followers)
 
 
-streamers = os.listdir(DATA_DIR)
+# streamers = os.listdir(DATA_DIR)
+# print(len(streamers))
 
 # streamers = []
 # import os
 # for streamer in os.listdir("data/"):
 #     streamers.append(streamer)
 
-streamers = ['Chap', 'LTANorth', 'Duke', 'broxh_', 'Adapt', 'Nadia', 'Rainbow6', 'Valkyrae']
 # for streamer in os.listdir("data"):
 #     streamers.append(streamer)
 
-for streamer in streamers:
-    process_streamer_metadata(streamer)
-
-# print(streamers)
-
-# batch_size = len(streamers) // 2
-# batch1 = streamers[:batch_size]
-# batch2 = streamers[batch_size:]
-
-# # Print results
-# print("Batch 1:", batch1)
-# print("Batch 2:", batch2)
-
-# process_streamer("DGthe99")
-# process_streamer("Ray")
-
-# completed = []
-# with open("completed.txt", "r") as file:
-#     for name in file:
-#         completed.append(name[:-1])
-
 # for streamer in streamers:
-#     if streamer in batch2 and streamer not in completed:
-#         process_streamer(streamer)
-#         with open("completed.txt", "a") as file:
-#             file.write(streamer + "\n")
+#     if streamer == "audio_conv.py":
+#         continue
+#     process_streamer_metadata(streamer)
+
+streamers = []
+with open("todo.txt", "r") as file:
+    for line in file:
+        streamers.append(line[:-1])
+print(streamers)
+
+batch_size = len(streamers) // 2
+batch1 = streamers[:batch_size]
+batch2 = streamers[batch_size:]
+
+# Print results
+print("Batch 1:", batch1)
+print("Batch 2:", batch2)
+
+completed = []
+with open("completed.txt", "r") as file:
+    for name in file:
+        completed.append(name[:-1])
+
+for streamer in streamers:
+    if streamer in batch1 and streamer not in completed:
+        process_streamer(streamer)
+        with open("completed.txt", "a") as file:
+            file.write(streamer + "\n")
