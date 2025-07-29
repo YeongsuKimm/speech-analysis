@@ -186,6 +186,7 @@ with open("todo.txt", "r") as file:
         streamers.append(line[:-1])
 print(streamers)
 
+streamers = os.listdir("processed")
 batch_size = len(streamers) // 2
 batch1 = streamers[:batch_size]
 batch2 = streamers[batch_size:]
@@ -200,7 +201,7 @@ with open("completed.txt", "r") as file:
         completed.append(name[:-1])
 
 for streamer in streamers:
-    if streamer in batch1 and streamer not in completed:
-        process_streamer(streamer)
+    if streamer in batch2 and streamer not in completed:
+        process_streamer_metadata(streamer)
         with open("completed.txt", "a") as file:
             file.write(streamer + "\n")

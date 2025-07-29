@@ -6,13 +6,17 @@ from torch.utils.data import Dataset, DataLoader, random_split
 from classification import get_dict
 import h5py
 import numpy as np
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler
+from tqdm import tqdm
 
 
 # Device setup
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Mode selection: "text", "audio", or "both"
-MODE = "both"
+MODE = "text"
 
 # Define the Streamer Dataset (supports all modes)
 class StreamerDataset(Dataset):
@@ -25,7 +29,6 @@ class StreamerDataset(Dataset):
         fold_3 = ['Vombuz', 'Valkyrae', 'xQc', 'survivalistaoe2de', 'Thebausffs', 'TenZ', 'Shotz', 'SmallAnt', 'SwaggerSouls', 'RedOpz', 'Ray__C', 'sodapoppin', 'PENTA', 'Punz', 'scump', 'MurderCrumpet', 'peterpark', 'plaqueboymax', 'MaryMaybe', 'Nmplol', 'Nihachu', 'LAXHAWTHORN007', 'MeatyMarley', 'MrSavage', 'KingWoolz', 'Lord_Kebun', 'loltyler1', 'Jacque', 'Keeoh', 'KaiCenat', 'huncho', 'Insym', 'ironmouse', 'Fannsy', 'GernaderJake', 'HasanAbi', 'd0cc_tv', 'EsfandTV', 'Emiru', 'carmen', 'chocoTaco', 'cloakzy', 'BreaK', 'BobbyPoffGaming', 'CaptainSparklez', 'BarbarousKing', 'AuzioMF', 'BadBoyHalo', '39daph']        
         fold_4 = ['Trynet123', 'Trick2g', 'x2Twins', 'Sterdekie', 'Terroriser', 'tarik', 'Shapaz', 'sapnaplive', 'summit1g', 'Rallied', 'Ray', 'sneakylol', 'p4perback', 'PontiacMadeDDG', 'ScreaM', 'mollozhang', 'Pestily', 'Philza', 'MARI', 'Necros', 'Nightblue3', 'LanceMcDonald', 'Maximilian_DOOD', 'moistcr1tikal', 'KidShadoe', 'lilsimsie', 'Loeya', 'J4CKIECHAN', 'k3soju', 'Jynxzi', 'HollywoodBob', 'iddqd', 'ImperialHal__', 'Everretta', 'fuslie', 'Gosu', 'crazyjapanese', 'erobb221', 'Duke', 'capturesca', 'Chap', 'Clix', 'Blue_Squadron', 'Bigpuffer', 'broxh_', 'AxialMatt', 'AussieAntics', 'Aydan', 'aceu']
         test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
-
         self.streamers = fold_1.copy()
         self.streamers.extend(fold_2)
         self.streamers.extend(fold_3)
@@ -156,6 +159,21 @@ class MultiModalMLP(nn.Module):
         fused = torch.cat((text_feat, audio_feat), dim=1)
         return self.fusion_mlp(fused)
 
+def extract_features(dataset, indices, mode="both"):
+    features = []
+    labels = []
+    for idx in tqdm(indices, desc=f"Extracting {mode} features"):
+        item = dataset[idx]
+        if mode == "both":
+            text_feat, audio_feat, label = item
+            combined_feat = torch.cat([text_feat, audio_feat]).numpy()
+        else:
+            feat, label = item
+            combined_feat = feat.numpy()
+        features.append(combined_feat)
+        labels.append(label)
+    return np.array(features), np.array(labels)
+
 # Training + Validation
 def train_model(model, train_loader, val_loader, optimizer, criterion, num_epochs=10):
     model.to(DEVICE)
@@ -242,7 +260,7 @@ if __name__ == "__main__":
     combined.extend(test)
 
     label_dict = get_dict(combined)
-    dataset = StreamerDataset(root_dir="processed", label_dict=label_dict, mode=MODE, normalize=False)
+    dataset = StreamerDataset(root_dir="processed", label_dict=label_dict, mode=MODE, normalize=True)
 
     streamer_to_indices = {}
     for idx, item in enumerate(dataset.data):
@@ -264,32 +282,47 @@ if __name__ == "__main__":
     val_indices = [idx for s in val_streamers for idx in streamer_to_indices.get(s, [])]
     train_indices = [idx for s in train_streamers for idx in streamer_to_indices.get(s, [])]
 
-    train_subset = torch.utils.data.Subset(dataset, train_indices)
-    val_subset = torch.utils.data.Subset(dataset, val_indices)
+    X_train, y_train = extract_features(dataset, train_indices, mode=MODE)
+    X_val, y_val = extract_features(dataset, val_indices, mode=MODE)
 
-    train_loader = DataLoader(train_subset, batch_size=BATCH_SIZE, shuffle=True)
-    val_loader = DataLoader(val_subset, batch_size=BATCH_SIZE, shuffle=False)
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_val_scaled = scaler.transform(X_val)
 
-    print(f"Train streamers: {len(train_streamers)}, Validation streamers: {len(val_streamers)}")
-    print(f"Train samples: {len(train_indices)}, Validation samples: {len(val_indices)}")
+    svm_clf = SVC(kernel='linear', C=1.0, gamma='scale')  # try kernel='linear' too
+    svm_clf.fit(X_train_scaled, y_train)
 
-    if MODE == "text":
-        model = TextOnlyMLP(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "text_only_class_model_normalized_t70-3.pth"
-    elif MODE == "audio":
-        model = AudioOnlyMLP(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "audio_only_class_model_normalized_t70-3.pth"
-    else:
-        model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "streamer_class_model_normalized_t70-3.pth"
+    # --- Evaluate ---
+    y_pred = svm_clf.predict(X_val_scaled)
+    accuracy = accuracy_score(y_val, y_pred)
+    print(f"SVM Validation Accuracy: {accuracy * 100:.2f}%")
 
-    optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=1e-3)
-    criterion = nn.CrossEntropyLoss()
+    # train_subset = torch.utils.data.Subset(dataset, train_indices)
+    # val_subset = torch.utils.data.Subset(dataset, val_indices)
 
-    print(model_name)
+    # train_loader = DataLoader(train_subset, batch_size=BATCH_SIZE, shuffle=True)
+    # val_loader = DataLoader(val_subset, batch_size=BATCH_SIZE, shuffle=False)
 
-    train_model(model, train_loader, val_loader, optimizer, criterion, num_epochs=NUM_EPOCHS)
+    # print(f"Train streamers: {len(train_streamers)}, Validation streamers: {len(val_streamers)}")
+    # print(f"Train samples: {len(train_indices)}, Validation samples: {len(val_indices)}")
 
-    model_path = f"models/{model_name}"
-    torch.save(model.state_dict(), model_path)
-    print(f"Model saved to {model_path}")
+    # if MODE == "text":
+    #     model = TextOnlyMLP(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
+    #     model_name = "text_only_class_model_normalized_t70-3.pth"
+    # elif MODE == "audio":
+    #     model = AudioOnlyMLP(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
+    #     model_name = "audio_only_class_model_normalized_t70-3.pth"
+    # else:
+    #     model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
+    #     model_name = "streamer_class_model_normalized_t70-3.pth"
+
+    # optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=1e-3)
+    # criterion = nn.CrossEntropyLoss()
+
+    # print(model_name)
+
+    # train_model(model, train_loader, val_loader, optimizer, criterion, num_epochs=NUM_EPOCHS)
+
+    # model_path = f"models/{model_name}"
+    # torch.save(model.state_dict(), model_path)
+    # print(f"Model saved to {model_path}")

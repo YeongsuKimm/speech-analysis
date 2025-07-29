@@ -49,7 +49,7 @@ def evaluate_model(model, dataloader, mode="both", norm_dir=None, device="cuda")
 
 
 if __name__ == "__main__":
-    MODE = "text"  
+    MODE = "both"  
     dataset = StreamerDataset(".test/", mode=MODE, norm_dir="norm_params")
 
     # You can split dataset or create val_loader like in your training script
@@ -75,6 +75,8 @@ if __name__ == "__main__":
     else:
         model = MultiModalRegressor(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
         model_path = "models/streamer_reg_model_normalized_t70-3.pth"
+
+    model_path = "models/fold_reg_4_both_model.pth"
 
     model.load_state_dict(torch.load(model_path, map_location=DEVICE))
 

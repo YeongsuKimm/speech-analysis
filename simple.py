@@ -525,37 +525,45 @@ def distribute_three_lists_into_five_parts(list1, list2, list3):
 
 import os
 # streamers = os.listdir("processed")
+# streamers = []
+# with open("todo.txt", "r") as f:
+#     for streamer in f:
+#         streamers.append(streamer[:-1])
+#         print(streamer)
 # print(streamers)
 # print(len(streamers))
 # for streamer in os.listdir("processed"):
 #     for name in os.listdir(f"processed/{streamer}"):
-#         if name.endswith(".pt"):
+#         if name == "metadata.h5":
 #             file_path = os.path.join("processed", streamer, name)
 #             # print(name)
 #             os.remove(file_path)
 #             print(f"Deleted: {file_path}")
 
-# processed_folders = os.listdir("processed")
-# print(f"Total folders in 'processed/': {len(processed_folders)}")
-# import shutil
-# import os
-# test_folders = os.listdir(".test")
-# # print(test_folders)
-# print(f"Total folders in '.test/': {len(test_folders)}")
-# # Move test streamers to .test folder
-# for name in test_folders:
-#     source_folder = os.path.join(".test", name)
-#     destination_folder = os.path.join("processed", name)
+test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
 
-#     if not os.path.exists(source_folder):
-#         print(f"❌ {name} not found in processed/")
-#         continue
 
-#     try:
-#         shutil.move(source_folder, destination_folder)
-#         print(f"✅ Moved {name} to .test/")
-#     except Exception as e:
-#         print(f"⚠️ Error moving {name}: {e}")
+processed_folders = os.listdir("processed")
+print(f"Total folders in 'processed/': {len(processed_folders)}")
+import shutil
+import os
+test_folders = os.listdir(".test")
+# print(test_folders)
+print(f"Total folders in '.test/': {len(test_folders)}")
+# Move test streamers to .test folder
+for name in test:
+    source_folder = os.path.join("processed", name)
+    destination_folder = os.path.join(".test", name)
+
+    if not os.path.exists(source_folder):
+        print(f"❌ {name} not found in processed/")
+        continue
+
+    try:
+        shutil.move(source_folder, destination_folder)
+        print(f"✅ Moved {name} to .test/")
+    except Exception as e:
+        print(f"⚠️ Error moving {name}: {e}")
 
 
 

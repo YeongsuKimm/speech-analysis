@@ -11,9 +11,21 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 class StreamerDatasetRaw(Dataset):
     def __init__(self, root_dir, mode="both"):
         self.root_dir = root_dir
-        self.streamers = os.listdir(root_dir)
         self.mode = mode
         self.data = []
+
+        fold_1 = ['xFSN_Saber', 'Zoomaa', 'zackrawrr', 'TheGeekEntry', 'Thiefs', 'TinaKitten', 'starsmitten', 'supertf', 'Sykkuno', 'robcdee', 'RTGame', 'SovietWomble', 'pupsker', 'Quin69', 'shroud', 'omareloff', 'PirateSoftware', 'RanbooLive', 'miia', 'pashaBiceps', 'nl_Kripp', 'LotharHS', 'MOONMOON', 'NateHill', 'kyliebitkin', 'LVNDMARK', 'Ludwig', 'jordansisco_', 'kyootbot', 'lilypichu', 'iLumpE', 'jasontheween', 'Joe_Bartolozzi', 'Glorious_E', 'Gorgc', 'iiTzTimmy', 'DGthe99', 'filian', 'Flight23white', 'cjya', 'Elajjaz', 'DisguisedToast', 'BrownGotti', 'Caedrel', 'Castro_1021', 'BennyCentral', 'A_Seagull', 'BobRoss', 'ahmpy']
+        fold_2 = ['Wicked', 'vedal987', 'yourragegaming', 'T90Official', 'thesketchreal', 'TimTheTatman', 'Sideshow', 'SMii7Y', 'Sweet_Anita', 'redspecter23', 'RDCgaming', 'Sommerset', 'Psychoghost', 'QuarterJade', 'ShahZaM', 'NyyBeats', 'Pikabooirl', 'Rainbow6', 'MataraKan', 'Northernlion', 'Ninja', 'LFToxy_val', 'Mendo', 'Nadeshot', 'KmartPoker', 'LuluLuvely', 'LTANorth', 'JayOddity', 'Kitboga', 'Kyedae', 'hypnoshark', 'itsSpoit', 'JackManifoldTV', 'Geef', 'GoldGlove', 'Hiko', 'DEFAC3D', 'ExtraEmily', 'Fanum', 'Casson', 'Dyrus', 'CohhCarnage', 'BreesKnees', 'BrookeAB', 'caseoh_', 'Beardageddon', 'Aztecross', 'benjyfishy', 'Adapt']
+        fold_3 = ['Vombuz', 'Valkyrae', 'xQc', 'survivalistaoe2de', 'Thebausffs', 'TenZ', 'Shotz', 'SmallAnt', 'SwaggerSouls', 'RedOpz', 'Ray__C', 'sodapoppin', 'PENTA', 'Punz', 'scump', 'MurderCrumpet', 'peterpark', 'plaqueboymax', 'MaryMaybe', 'Nmplol', 'Nihachu', 'LAXHAWTHORN007', 'MeatyMarley', 'MrSavage', 'KingWoolz', 'Lord_Kebun', 'loltyler1', 'Jacque', 'Keeoh', 'KaiCenat', 'huncho', 'Insym', 'ironmouse', 'Fannsy', 'GernaderJake', 'HasanAbi', 'd0cc_tv', 'EsfandTV', 'Emiru', 'carmen', 'chocoTaco', 'cloakzy', 'BreaK', 'BobbyPoffGaming', 'CaptainSparklez', 'BarbarousKing', 'AuzioMF', 'BadBoyHalo', '39daph']        
+        fold_4 = ['Trynet123', 'Trick2g', 'x2Twins', 'Sterdekie', 'Terroriser', 'tarik', 'Shapaz', 'sapnaplive', 'summit1g', 'Rallied', 'Ray', 'sneakylol', 'p4perback', 'PontiacMadeDDG', 'ScreaM', 'mollozhang', 'Pestily', 'Philza', 'MARI', 'Necros', 'Nightblue3', 'LanceMcDonald', 'Maximilian_DOOD', 'moistcr1tikal', 'KidShadoe', 'lilsimsie', 'Loeya', 'J4CKIECHAN', 'k3soju', 'Jynxzi', 'HollywoodBob', 'iddqd', 'ImperialHal__', 'Everretta', 'fuslie', 'Gosu', 'crazyjapanese', 'erobb221', 'Duke', 'capturesca', 'Chap', 'Clix', 'Blue_Squadron', 'Bigpuffer', 'broxh_', 'AxialMatt', 'AussieAntics', 'Aydan', 'aceu']
+        test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
+
+        self.streamers = fold_1.copy()
+        self.streamers.extend(fold_2)
+        self.streamers.extend(fold_3)
+        self.streamers.extend(fold_4)
+        # self.streamers = os.listdir(root_dir)
+        print(len(self.streamers))
 
         for streamer in self.streamers:
             streamer_path = os.path.join(root_dir, streamer)
@@ -23,7 +35,12 @@ class StreamerDatasetRaw(Dataset):
             
             with h5py.File(metadata_path, "r") as f:
                 if "tensor" in f:
-                    target = f["tensor"][2]  # Load scalar or array
+                    target = f["tensor"][2]
+                    if target == 0.0:
+                        print(streamer)
+                        with open("todo.txt", "a") as f:
+                            f.write(streamer + "\n")
+                    print(target)  # Load scalar or array
                 else:
                     # Fallback or error
                     print(f"Warning: follower_count not found in {metadata_path}")
@@ -98,15 +115,15 @@ def compute_and_save_stats(dataset, mode="both", save_dir="norm_params"):
         text_feats = np.stack(text_feats)
         text_mean = text_feats.mean(axis=0)
         text_std = text_feats.std(axis=0) + 1e-8
-        np.save(os.path.join(save_dir, "fold_text_reg_mean.npy"), text_mean)
-        np.save(os.path.join(save_dir, "fold_text_reg_std.npy"), text_std)
+        np.save(os.path.join(save_dir, "text_reg_mean.npy"), text_mean)
+        np.save(os.path.join(save_dir, "text_reg_std.npy"), text_std)
         print("Saved text mean and std.")
     if audio_feats:
         audio_feats = np.stack(audio_feats)
         audio_mean = audio_feats.mean(axis=0)
         audio_std = audio_feats.std(axis=0) + 1e-8
-        np.save(os.path.join(save_dir, "fold_audio_reg_mean.npy"), audio_mean)
-        np.save(os.path.join(save_dir, "fold_audio_reg_std.npy"), audio_std)
+        np.save(os.path.join(save_dir, "audio_reg_mean.npy"), audio_mean)
+        np.save(os.path.join(save_dir, "audio_reg_std.npy"), audio_std)
         print("Saved audio mean and std.")
 
 def compute_and_save_label_stats(dataset, save_dir="norm_params"):
@@ -123,8 +140,8 @@ def compute_and_save_label_stats(dataset, save_dir="norm_params"):
     label_std = targets_tensor.std()
 
     os.makedirs(save_dir, exist_ok=True)
-    np.save(os.path.join(save_dir, "fold_label_mean.npy"), label_mean.numpy())
-    np.save(os.path.join(save_dir, "fold_label_std.npy"), label_std.numpy())
+    np.save(os.path.join(save_dir, "label_mean.npy"), label_mean.numpy())
+    np.save(os.path.join(save_dir, "label_std.npy"), label_std.numpy())
 
 if __name__ == "__main__":
     MODE = "both"

@@ -9,7 +9,19 @@ import torch
 class StreamerDatasetRaw(Dataset):
     def __init__(self, root_dir, label_dict, mode="both"):
         self.root_dir = root_dir
-        self.streamers = os.listdir(root_dir)
+        # self.streamers = os.listdir(root_dir)
+
+        fold_1 = ['xFSN_Saber', 'Zoomaa', 'zackrawrr', 'TheGeekEntry', 'Thiefs', 'TinaKitten', 'starsmitten', 'supertf', 'Sykkuno', 'robcdee', 'RTGame', 'SovietWomble', 'pupsker', 'Quin69', 'shroud', 'omareloff', 'PirateSoftware', 'RanbooLive', 'miia', 'pashaBiceps', 'nl_Kripp', 'LotharHS', 'MOONMOON', 'NateHill', 'kyliebitkin', 'LVNDMARK', 'Ludwig', 'jordansisco_', 'kyootbot', 'lilypichu', 'iLumpE', 'jasontheween', 'Joe_Bartolozzi', 'Glorious_E', 'Gorgc', 'iiTzTimmy', 'DGthe99', 'filian', 'Flight23white', 'cjya', 'Elajjaz', 'DisguisedToast', 'BrownGotti', 'Caedrel', 'Castro_1021', 'BennyCentral', 'A_Seagull', 'BobRoss', 'ahmpy']
+        fold_2 = ['Wicked', 'vedal987', 'yourragegaming', 'T90Official', 'thesketchreal', 'TimTheTatman', 'Sideshow', 'SMii7Y', 'Sweet_Anita', 'redspecter23', 'RDCgaming', 'Sommerset', 'Psychoghost', 'QuarterJade', 'ShahZaM', 'NyyBeats', 'Pikabooirl', 'Rainbow6', 'MataraKan', 'Northernlion', 'Ninja', 'LFToxy_val', 'Mendo', 'Nadeshot', 'KmartPoker', 'LuluLuvely', 'LTANorth', 'JayOddity', 'Kitboga', 'Kyedae', 'hypnoshark', 'itsSpoit', 'JackManifoldTV', 'Geef', 'GoldGlove', 'Hiko', 'DEFAC3D', 'ExtraEmily', 'Fanum', 'Casson', 'Dyrus', 'CohhCarnage', 'BreesKnees', 'BrookeAB', 'caseoh_', 'Beardageddon', 'Aztecross', 'benjyfishy', 'Adapt']
+        fold_3 = ['Vombuz', 'Valkyrae', 'xQc', 'survivalistaoe2de', 'Thebausffs', 'TenZ', 'Shotz', 'SmallAnt', 'SwaggerSouls', 'RedOpz', 'Ray__C', 'sodapoppin', 'PENTA', 'Punz', 'scump', 'MurderCrumpet', 'peterpark', 'plaqueboymax', 'MaryMaybe', 'Nmplol', 'Nihachu', 'LAXHAWTHORN007', 'MeatyMarley', 'MrSavage', 'KingWoolz', 'Lord_Kebun', 'loltyler1', 'Jacque', 'Keeoh', 'KaiCenat', 'huncho', 'Insym', 'ironmouse', 'Fannsy', 'GernaderJake', 'HasanAbi', 'd0cc_tv', 'EsfandTV', 'Emiru', 'carmen', 'chocoTaco', 'cloakzy', 'BreaK', 'BobbyPoffGaming', 'CaptainSparklez', 'BarbarousKing', 'AuzioMF', 'BadBoyHalo', '39daph']        
+        fold_4 = ['Trynet123', 'Trick2g', 'x2Twins', 'Sterdekie', 'Terroriser', 'tarik', 'Shapaz', 'sapnaplive', 'summit1g', 'Rallied', 'Ray', 'sneakylol', 'p4perback', 'PontiacMadeDDG', 'ScreaM', 'mollozhang', 'Pestily', 'Philza', 'MARI', 'Necros', 'Nightblue3', 'LanceMcDonald', 'Maximilian_DOOD', 'moistcr1tikal', 'KidShadoe', 'lilsimsie', 'Loeya', 'J4CKIECHAN', 'k3soju', 'Jynxzi', 'HollywoodBob', 'iddqd', 'ImperialHal__', 'Everretta', 'fuslie', 'Gosu', 'crazyjapanese', 'erobb221', 'Duke', 'capturesca', 'Chap', 'Clix', 'Blue_Squadron', 'Bigpuffer', 'broxh_', 'AxialMatt', 'AussieAntics', 'Aydan', 'aceu']
+        test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
+
+        self.streamers = fold_1.copy()
+        self.streamers.extend(fold_2)
+        self.streamers.extend(fold_3)
+        self.streamers.extend(fold_4)
+
         self.label_dict = label_dict
         self.mode = mode
 
@@ -79,20 +91,29 @@ def compute_and_save_stats(dataset, mode, fold):
         mod_feats = np.stack(mod_feats)
         mean = np.mean(mod_feats, axis=0)
         std = np.std(mod_feats, axis=0)
-        np.save(f"norm_params/fold{fold}_{mod}_class_mean.npy", mean)
-        np.save(f"norm_params/fold{fold}_{mod}_class_std.npy", std)
+        np.save(f"norm_params/{mod}_class_mean.npy", mean)
+        np.save(f"norm_params/{mod}_class_std.npy", std)
         print(f"{mod.upper()} mean/std saved: shape = {mean.shape}")
 
 
 if __name__ == "__main__":
     mode = "both"
-    root_dir = "processed"
-    fold_1 = ['ahmpy', 'AmericanDad', 'AxialMatt', 'BarbarousKing', 'Beardageddon', 'BennyCentral', 'BikeMan', 'Blue_Squadron', 'BreaK', 'BreesKnees', 'BrownGotti', 'BruceGreene', 'capturesca', 'carmen', 'Casson', 'cjya', 'Couriway', 'crazyjapanese', 'd0cc_tv', 'DEFAC3D', 'DGthe99', 'Eros', 'Everretta', 'Fannsy', 'Geef', 'Glorious_E', 'Gnomonkey', 'HollywoodBob', 'huncho', 'hypnoshark', 'iLumpE', 'ixxdeee', 'J4CKIECHAN', 'Jacque', 'JayOddity', 'jordansisco_', 'Kerrty', 'KidShadoe', 'KingWoolz', 'KmartPoker', 'kyliebitkin', 'L3WG', 'LanceMcDonald', 'LAXHAWTHORN007', 'LFToxy_val', 'LotharHS', 'Mactics', 'MARI', 'MaryMaybe']
-    fold_2 = ['MataraKan', 'miia', 'MisoxShiru', 'mollozhang', 'MurderCrumpet', 'NyyBeats', 'omareloff', 'OniKanaVT', 'p4perback', 'PENTA', 'Psychoghost', 'pupsker', 'RachtaZ', 'Rallied', 'RedOpz', 'redspecter23', 'robcdee', 'ScrubNoob', 'Shapaz', 'Shotz', 'Sideshow', 'starsmitten', 'Stealthygolem', 'Sterdekie', 'survivalistaoe2de', 'T90Official', 'TheGeekEntry', 'tjnv', 'Trynet123', 'Vombuz', 'Wicked', 'xFSN_Saber', '39daph', 'Adapt', 'aircool', 'AussieAntics', 'AuzioMF', 'Aztecross', 'A_Seagull', 'bateson87', 'Bigpuffer', 'BobbyPoffGaming', 'BrookeAB', 'Caedrel', 'CDawgVA', 'Chap', 'chocoTaco', 'Dyrus', 'Elajjaz']
-    fold_3 = ['Emongg', 'erobb221', 'EsfandTV', 'ExtraEmily', 'filian', 'fl0m', 'fuslie', 'GernaderJake', 'GoldGlove', 'Gorgc', 'Hungrybox', 'iddqd', 'Insym', 'itsSpoit', 'jasontheween', 'JonSandman', 'k3soju', 'Keeoh', 'Kitboga', 'kyootbot', 'Lacy', 'lilsimsie', 'Lord_Kebun', 'LuluLuvely', 'LVNDMARK', 'MacieJay', 'Maximilian_DOOD', 'MeatyMarley', 'Mendo', 'MOONMOON', 'Nadia', 'Necros', 'Nmplol', 'Northernlion', 'pashaBiceps', 'PaymoneyWubby', 'Pestily', 'peterpark', 'Pikabooirl', 'PirateSoftware', 'POACH', 'PontiacMadeDDG', 'Punz', 'QuarterJade', 'Quin69', 'Ranger', 'Ray', 'Ray__C', 'RDCgaming']
-    fold_4 = ['RTGame', 'runthefutmarket', 'sapnaplive', 'SmallAnt', 'SMii7Y', 'supertf', 'Swiftor', 'Terroriser', 'Thebausffs', 'thesketchreal', 'Thiefs', 'TobiasFate', 'Trick2g', 'Valkyrae', 'vedal987', 'Zoomaa', 'aceu', 'AustinShow', 'Aydan', 'BadBoyHalo', 'benjyfishy', 'BobRoss', 'boxbox', 'broxh_', 'CaptainSparklez', 'caseoh_', 'Castro_1021', 'Chica', 'Clix', 'cloakzy', 'CohhCarnage', 'DisguisedToast', 'DrLupo', 'Duke', 'Emiru', 'Fanum', 'Flight23white', 'forsen', 'Gosu', 'HasanAbi', 'Hiko', 'iiTzTimmy', 'imaqtpie', 'ImperialHal__', 'ironmouse', 'JackManifoldTV', 'Joe_Bartolozzi', 'JoshOG', 'Jynxzi']
-    # label_dict = get_dict([item for item in os.listdir(root_dir) if item not in fold_4])
-    label_dict = get_dict(os.listdir(root_dir))
+    fold_1 = ['xFSN_Saber', 'Zoomaa', 'zackrawrr', 'TheGeekEntry', 'Thiefs', 'TinaKitten', 'starsmitten', 'supertf', 'Sykkuno', 'robcdee', 'RTGame', 'SovietWomble', 'pupsker', 'Quin69', 'shroud', 'omareloff', 'PirateSoftware', 'RanbooLive', 'miia', 'pashaBiceps', 'nl_Kripp', 'LotharHS', 'MOONMOON', 'NateHill', 'kyliebitkin', 'LVNDMARK', 'Ludwig', 'jordansisco_', 'kyootbot', 'lilypichu', 'iLumpE', 'jasontheween', 'Joe_Bartolozzi', 'Glorious_E', 'Gorgc', 'iiTzTimmy', 'DGthe99', 'filian', 'Flight23white', 'cjya', 'Elajjaz', 'DisguisedToast', 'BrownGotti', 'Caedrel', 'Castro_1021', 'BennyCentral', 'A_Seagull', 'BobRoss', 'ahmpy']
+    fold_2 = ['Wicked', 'vedal987', 'yourragegaming', 'T90Official', 'thesketchreal', 'TimTheTatman', 'Sideshow', 'SMii7Y', 'Sweet_Anita', 'redspecter23', 'RDCgaming', 'Sommerset', 'Psychoghost', 'QuarterJade', 'ShahZaM', 'NyyBeats', 'Pikabooirl', 'Rainbow6', 'MataraKan', 'Northernlion', 'Ninja', 'LFToxy_val', 'Mendo', 'Nadeshot', 'KmartPoker', 'LuluLuvely', 'LTANorth', 'JayOddity', 'Kitboga', 'Kyedae', 'hypnoshark', 'itsSpoit', 'JackManifoldTV', 'Geef', 'GoldGlove', 'Hiko', 'DEFAC3D', 'ExtraEmily', 'Fanum', 'Casson', 'Dyrus', 'CohhCarnage', 'BreesKnees', 'BrookeAB', 'caseoh_', 'Beardageddon', 'Aztecross', 'benjyfishy', 'Adapt']
+    fold_3 = ['Vombuz', 'Valkyrae', 'xQc', 'survivalistaoe2de', 'Thebausffs', 'TenZ', 'Shotz', 'SmallAnt', 'SwaggerSouls', 'RedOpz', 'Ray__C', 'sodapoppin', 'PENTA', 'Punz', 'scump', 'MurderCrumpet', 'peterpark', 'plaqueboymax', 'MaryMaybe', 'Nmplol', 'Nihachu', 'LAXHAWTHORN007', 'MeatyMarley', 'MrSavage', 'KingWoolz', 'Lord_Kebun', 'loltyler1', 'Jacque', 'Keeoh', 'KaiCenat', 'huncho', 'Insym', 'ironmouse', 'Fannsy', 'GernaderJake', 'HasanAbi', 'd0cc_tv', 'EsfandTV', 'Emiru', 'carmen', 'chocoTaco', 'cloakzy', 'BreaK', 'BobbyPoffGaming', 'CaptainSparklez', 'BarbarousKing', 'AuzioMF', 'BadBoyHalo', '39daph']        
+    fold_4 = ['Trynet123', 'Trick2g', 'x2Twins', 'Sterdekie', 'Terroriser', 'tarik', 'Shapaz', 'sapnaplive', 'summit1g', 'Rallied', 'Ray', 'sneakylol', 'p4perback', 'PontiacMadeDDG', 'ScreaM', 'mollozhang', 'Pestily', 'Philza', 'MARI', 'Necros', 'Nightblue3', 'LanceMcDonald', 'Maximilian_DOOD', 'moistcr1tikal', 'KidShadoe', 'lilsimsie', 'Loeya', 'J4CKIECHAN', 'k3soju', 'Jynxzi', 'HollywoodBob', 'iddqd', 'ImperialHal__', 'Everretta', 'fuslie', 'Gosu', 'crazyjapanese', 'erobb221', 'Duke', 'capturesca', 'Chap', 'Clix', 'Blue_Squadron', 'Bigpuffer', 'broxh_', 'AxialMatt', 'AussieAntics', 'Aydan', 'aceu']
+    test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
+
+    streamers = fold_1.copy()
+    streamers.extend(fold_2)
+    streamers.extend(fold_3)
+    streamers.extend(fold_4)
+    streamers.extend(test)
+
+    print(len(streamers))
+
+    label_dict = get_dict(streamers)
+
     print(len(label_dict))
-    dataset = StreamerDatasetRaw(root_dir=root_dir, label_dict=label_dict, mode=mode)
+    dataset = StreamerDatasetRaw(root_dir="processed", label_dict=label_dict, mode=mode)
     compute_and_save_stats(dataset, mode, "")
