@@ -10,7 +10,7 @@ import numpy as np
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Mode: "text", "audio", or "both"
-MODE = "both"
+MODE = "text"
 
 class StreamerDataset(Dataset):
     def __init__(self, root_dir, mode="both", norm_dir=None):
@@ -170,7 +170,7 @@ class MultiModalRegressor(nn.Module):
 # Training function
 def train_model(model, train_loader, val_loader, epochs=10, lr=1e-4, device="cuda", mode="both"):
     model.to(device)
-    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-6)
+    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-7)
     criterion = nn.MSELoss()
 
     for epoch in range(epochs):
@@ -232,7 +232,9 @@ if __name__ == "__main__":
     fold_4 = ['Trynet123', 'Trick2g', 'x2Twins', 'Sterdekie', 'Terroriser', 'tarik', 'Shapaz', 'sapnaplive', 'summit1g', 'Rallied', 'Ray', 'sneakylol', 'p4perback', 'PontiacMadeDDG', 'ScreaM', 'mollozhang', 'Pestily', 'Philza', 'MARI', 'Necros', 'Nightblue3', 'LanceMcDonald', 'Maximilian_DOOD', 'moistcr1tikal', 'KidShadoe', 'lilsimsie', 'Loeya', 'J4CKIECHAN', 'k3soju', 'Jynxzi', 'HollywoodBob', 'iddqd', 'ImperialHal__', 'Everretta', 'fuslie', 'Gosu', 'crazyjapanese', 'erobb221', 'Duke', 'capturesca', 'Chap', 'Clix', 'Blue_Squadron', 'Bigpuffer', 'broxh_', 'AxialMatt', 'AussieAntics', 'Aydan', 'aceu']
     test = ['tjnv', 'TobiasFate', 'Tubbo', 'Stealthygolem', 'Swiftor', 'SypherPK', 'ScrubNoob', 'runthefutmarket', 'stableronaldo', 'RachtaZ', 'Ranger', 'sinatraa', 'OniKanaVT', 'POACH', 'Scarra', 'MisoxShiru', 'PaymoneyWubby', 'ohnePixel', 'Mactics', 'Nadia', 'NickEh30', 'L3WG', 'MacieJay', 'Mizkif', 'Kerrty', 'Lacy', 'LIRIK', 'ixxdeee', 'JonSandman', 'JoshOG', 'Gnomonkey', 'Hungrybox', 'imaqtpie', 'Eros', 'fl0m', 'forsen', 'Couriway', 'Emongg', 'DrLupo', 'BruceGreene', 'CDawgVA', 'Chica', 'BikeMan', 'bateson87', 'boxbox', 'AmericanDad', 'aircool', 'AustinShow']
 
-    dataset = StreamerDataset("processed/", mode=MODE)
+
+    norm_dir="norm_params"
+    dataset = StreamerDataset("processed/", mode=MODE, norm_dir="norm_params")
 
     streamer_to_indices = {}
     for idx, item in enumerate(dataset.data):
@@ -270,13 +272,13 @@ if __name__ == "__main__":
 
     if MODE == "text":
         model = TextOnlyRegressor(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "text_only_reg_model_normalized_t70-3.pth"
+        model_name = "text_only_reg_model_normalized_t70-3-wd-7.pth"
     elif MODE == "audio":
         model = AudioOnlyRegressor(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "audio_only_reg_model_normalized_t70-3.pth"
+        model_name = "audio_only_reg_model_normalized_t70-3-wd-7.pth"
     else:
         model = MultiModalRegressor(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "streamer_reg_model_normalized_t70-3.pth"
+        model_name = "streamer_reg_model_normalized_t70-3-wd-3.pth"
     print(model_name)
     # Train & save
     train_model(model, train_loader, val_loader, epochs=epochs, lr=lr, mode=MODE)

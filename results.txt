@@ -1,0 +1,291 @@
+models/audio_only_reg_model_normalized_t70-3-wd-3.pth
+Validation MSE Loss: 0.7426
+
+models/audio_only_reg_model_normalized_t70-3-wd-7.pth
+Validation MSE Loss: 0.7529
+
+models/streamer_reg_model_normalized_t70-3-wd-3.pth
+Validation MSE Loss: 0.7271
+
+models/streamer_reg_model_normalized_t70-3-wd-5.pth
+Validation MSE Loss: 0.8075
+
+models/streamer_reg_model_normalized_t70-3-wd-7.pth
+Validation MSE Loss: 0.7902
+
+models/text_only_reg_model_normalized_t70-3-wd-3.pth
+Validation MSE Loss: 0.6406
+
+models/text_only_reg_model_normalized_t70-3-wd-7.pth
+Validation MSE Loss: 0.7671
+
+
+
+models/audio_only_class_model_unnormalized_t70-3-wd-3.pth
+Evaluation Loss: 1.4187
+Evaluation Accuracy: 34.31%
+
+models/audio_only_class_model_unnormalized_t70-3-wd-7.pth
+Evaluation Loss: 3.5391
+Evaluation Accuracy: 35.60%
+
+models/streamer_class_model_unnormalized_t70-3-wd-3.pth
+Evaluation Loss: 1.2940
+Evaluation Accuracy: 35.95%
+
+models/streamer_class_model_unnormalized_t70-3-wd-5.pth
+Evaluation Loss: 3.5090
+Evaluation Accuracy: 34.51%
+
+models/streamer_class_model_unnormalized_t70-3-wd-7.pth
+Evaluation Loss: 3.4969
+Evaluation Accuracy: 35.77%
+
+models/text_only_class_model_unnormalized_t70-3-wd-3.pth
+Evaluation Loss: 1.0998
+Evaluation Accuracy: 30.48%
+
+models/text_only_class_model_unnormalized_t70-3-wd-7.pth
+Evaluation Loss: 1.0996
+Evaluation Accuracy: 30.48%
+
+
+
+models/audio_only_class_model_normalized_t70-3-wd-3.pth
+Evaluation Loss: 1.8076
+Evaluation Accuracy: 34.61%
+
+models/audio_only_class_model_normalized_t70-3-wd-7.pth
+Evaluation Loss: 5.0021
+Evaluation Accuracy: 34.82%
+
+models/text_only_class_model_normalized_t70-3-wd-3.pth
+Evaluation Loss: 1.1257
+Evaluation Accuracy: 32.16%
+
+models/text_only_class_model_normalized_t70-3-wd-7.pth
+Evaluation Loss: 1.6640
+Evaluation Accuracy: 33.31%
+
+models/streamer_class_model_normalized_t70-3-wd-3.pth
+Evaluation Loss: 1.6576
+Evaluation Accuracy: 33.99%
+
+models/streamer_class_model_normalized_t70-3-wd-5.pth
+Evaluation Loss: 4.3794
+Evaluation Accuracy: 33.22%
+
+models/streamer_class_model_normalized_t70-3-wd-7.pth
+Evaluation Loss: 4.6655
+Evaluation Accuracy: 34.75%
+
+
+
+models/fold_reg_1_audio_model_wd-3.pth
+Validation MSE Loss: 0.7430
+
+models/fold_reg_1_both_model_wd-3.pth
+Validation MSE Loss: 0.7509
+
+models/fold_reg_1_text_model_wd-3.pth
+Validation MSE Loss: 0.6441
+
+models/fold_reg_2_audio_model_wd-3.pth
+Validation MSE Loss: 0.7177
+
+models/fold_reg_2_both_model_wd-3.pth
+Validation MSE Loss: 0.7225
+
+models/fold_reg_2_text_model_wd-3.pth
+Validation MSE Loss: 0.6385
+
+models/fold_reg_3_audio_model_wd-3.pth
+Validation MSE Loss: 0.7164
+
+models/fold_reg_3_both_model_wd-3.pth
+Validation MSE Loss: 0.7333
+
+models/fold_reg_3_text_model_wd-3.pth
+Validation MSE Loss: 0.6363
+
+models/fold_reg_4_audio_model_wd-3.pth
+Validation MSE Loss: 0.7164
+
+models/fold_reg_4_both_model_wd-3.pth
+Validation MSE Loss: 0.7225
+
+models/fold_reg_4_text_model_wd-3.pth
+Validation MSE Loss: 0.6387
+
+
+
+
+
+
+models/audio_class_model_fold_1_wd-3.pt
+Evaluation Loss: 1.6999
+Evaluation Accuracy: 35.41%
+
+models/audio_class_model_fold_2_wd-3.pt
+Evaluation Loss: 1.5359
+Evaluation Accuracy: 35.93%
+
+models/audio_class_model_fold_3_wd-3.pt
+Evaluation Loss: 1.5820
+Evaluation Accuracy: 34.86%
+
+models/audio_class_model_fold_4_wd-3.pt
+Evaluation Loss: 1.6391
+Evaluation Accuracy: 35.01%
+
+models/both_class_model_fold_1_wd-3.pt
+Evaluation Loss: 1.4962
+Evaluation Accuracy: 35.62%
+
+models/both_class_model_fold_2_wd-3.pt
+Evaluation Loss: 1.4737
+Evaluation Accuracy: 36.78%
+
+models/both_class_model_fold_3_wd-3.pt
+Evaluation Loss: 1.5797
+Evaluation Accuracy: 37.04%
+
+models/both_class_model_fold_4_wd-3.pt
+Evaluation Loss: 1.5083
+Evaluation Accuracy: 35.36%
+
+models/text_class_model_fold_1_wd-3.pt
+Evaluation Loss: 1.1043
+Evaluation Accuracy: 35.39%
+
+models/text_class_model_fold_2_wd-3.pt
+Evaluation Loss: 1.1091
+Evaluation Accuracy: 35.09%
+
+models/text_class_model_fold_3_wd-3.pt
+Evaluation Loss: 1.1258
+Evaluation Accuracy: 31.97%
+
+models/text_class_model_fold_4_wd-3.pt
+Evaluation Loss: 1.1165
+Evaluation Accuracy: 33.68%
+
+
+
+
+
+
+
+
+
+models/audio_class_model_fold_1.pt
+Evaluation Loss: 3.5881
+Evaluation Accuracy: 36.00%
+
+models/audio_class_model_fold_2.pt
+Evaluation Loss: 3.6009
+Evaluation Accuracy: 38.00%
+
+models/audio_class_model_fold_3.pt
+Evaluation Loss: 3.7328
+Evaluation Accuracy: 35.95%
+
+models/audio_class_model_fold_4.pt
+Evaluation Loss: 3.8577
+Evaluation Accuracy: 34.76%
+
+models/both_class_model_fold_1.pt
+Evaluation Loss: 3.2866
+Evaluation Accuracy: 36.31%
+
+models/both_class_model_fold_2.pt
+Evaluation Loss: 3.4077
+Evaluation Accuracy: 38.09%
+
+models/both_class_model_fold_3.pt
+Evaluation Loss: 3.6450
+Evaluation Accuracy: 36.80%
+
+models/both_class_model_fold_4.pt
+Evaluation Loss: 3.4622
+Evaluation Accuracy: 35.00%
+
+models/text_class_model_fold_1.pt
+Evaluation Loss: 1.4127
+Evaluation Accuracy: 33.88%
+
+models/text_class_model_fold_2.pt
+Evaluation Loss: 1.3794
+Evaluation Accuracy: 34.09%
+
+models/text_class_model_fold_3.pt
+Evaluation Loss: 1.5217
+Evaluation Accuracy: 32.91%
+
+models/text_class_model_fold_4.pt
+Evaluation Loss: 1.3238
+Evaluation Accuracy: 33.80%
+
+
+
+
+
+
+models/fold_reg_1_audio_model.pth
+Validation MSE Loss: 0.7916
+
+models/fold_reg_1_both_model.pth
+Validation MSE Loss: 0.7988
+
+models/fold_reg_1_text_model.pth
+Validation MSE Loss: 0.7403
+
+models/fold_reg_2_audio_model.pth
+Validation MSE Loss: 0.7978
+
+models/fold_reg_2_both_model.pth
+Validation MSE Loss: 0.7982
+
+models/fold_reg_2_text_model.pth
+Validation MSE Loss: 0.7310
+
+models/fold_reg_3_audio_model.pth
+Validation MSE Loss: 0.7711
+
+models/fold_reg_3_both_model.pth
+Validation MSE Loss: 0.7928
+
+models/fold_reg_3_text_model.pth
+Validation MSE Loss: 0.7826
+
+models/fold_reg_4_audio_model.pth
+Validation MSE Loss: 0.7771
+
+models/fold_reg_4_both_model.pth
+Validation MSE Loss: 0.7974
+
+models/fold_reg_4_text_model.pth
+Validation MSE Loss: 0.7711
+
+
+
+
+
+
+
+models/text_class_model_fold_1.pt
+Evaluation Loss: 1.5026
+Evaluation Accuracy: 33.21%
+
+models/text_class_model_fold_2.pt
+Evaluation Loss: 1.7452
+Evaluation Accuracy: 33.85%
+
+models/text_class_model_fold_3.pt
+Evaluation Loss: 1.4878
+Evaluation Accuracy: 34.19%
+
+models/text_class_model_fold_4.pt
+Evaluation Loss: 1.5993
+Evaluation Accuracy: 33.90%
+

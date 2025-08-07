@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 # Path to dataset
 data_path = "data/"
 
+# print(len(os.listdir(data_path)))
 # Collect follower counts
 follower_counts = []
 streamers = []
@@ -16,62 +17,53 @@ for streamer in os.listdir(data_path):
     if os.path.isfile(metadata_path):
         with open(metadata_path, "r") as f:
             for line in f:
-                if "Current Subscribers:" in line:
+                if "Total Followers:" in line or "Followers:" in line:
                     raw_value = line.split(":")[1].strip()
                     try:
                         count = int(raw_value)
                         follower_counts.append(count)
-                        if count ==2:
-                            print(streamer)
                         streamers.append(streamer)
                     except ValueError:
                         print(f"Skipping invalid follower count: {raw_value}")
 
 follower_counts= np.array(follower_counts)
 
-print(len(streamers))
-alls = []
-for streamer in os.listdir("data"):
-    alls.append(streamer)
+# print(follower_counts)
 
-for streamer in alls:
-    if streamer not in streamers:
-        print(streamer)
-
-print(len(follower_counts))
-
-print(max(follower_counts))
-print(min(follower_counts))
-# counts, bin_edges = np.histogram(follower_counts, bins=3)
-
-# # Get the min and max of each bin
-# bin_min_max = [(bin_edges[i], bin_edges[i+1]) for i in range(len(bin_edges)-1)]
-
-# print(bin_min_max)
-
-# Q1 = np.percentile(follower_counts, 25)
-# Q3 = np.percentile(follower_counts, 75)
-
-# IQR = Q3 - Q1
-
-# lower_bound = Q1 - 1.5 * IQR
-# upper_bound = Q3 + 1.5 * IQR
-
-# filtered_data = follower_counts[(follower_counts >= lower_bound) & (follower_counts <= upper_bound)]
-
-# # Plot histogram with logarithmic x-axis
-# df = pd.DataFrame({"values":filtered_data})
-# df['binned'] = pd.qcut(df['values'], q=3, labels=['Low', 'Medium', 'High'])
+# print(len(streamers))
 
 log_follower_counts = np.log10(follower_counts)
 
-plt.figure(figsize=(10, 6))
-bins = np.histogram(log_follower_counts, bins=4)[1]
-plt.hist(follower_counts, bins=4, edgecolor="black", log=True)  # log=True for log-scale y-axis
-plt.xlabel("Peak Sub Count")
-plt.ylabel("Frequency")
-plt.title("Distribution of Peak Sub Count Among Streamers")
-plt.grid(True, which="both", linestyle="--", linewidth=0.5)
+# print(log_follower_counts)
 
-# Save the figure if running in a non-interactive environment
-plt.savefig("scar.png")
+median = np.median(log_follower_counts)
+q25 = np.percentile(log_follower_counts, 25)
+q75 = np.percentile(log_follower_counts, 75)
+
+# Deviations from the median
+lower_dev = median - q25
+upper_dev = q75 - median
+
+print("Median:", median)
+print("25th percentile:", q25)
+print("75th percentile:", q75)
+print("Deviation below median:", lower_dev)
+print("Deviation above median:", upper_dev)
+
+# print(max(log_follower_counts))
+# print(min(log_follower_counts))
+
+# print(max(follower_counts))
+# print(min(follower_counts))
+
+# plt.figure(figsize=(10, 6))
+# plt.hist(log_follower_counts, bins=10, edgecolor="black", log=False)  # log=True for log-scale y-axis
+# plt.xlabel("Log Follower Count", fontsize = 20)
+# plt.ylabel("Frequency", fontsize = 20)
+# plt.xticks(fontsize=14)
+# plt.yticks(fontsize=14)
+# # plt.title("Distribution of Follower Count Among Streamers")
+# plt.grid(True, which="both", linestyle="--", linewidth=0.5)
+
+# # Save the figure if running in a non-interactive environment
+# plt.savefig("histogram.png")

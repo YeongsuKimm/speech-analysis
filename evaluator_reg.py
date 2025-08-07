@@ -45,44 +45,61 @@ def evaluate_model(model, dataloader, mode="both", norm_dir=None, device="cuda")
 
     avg_loss = total_loss / len(dataloader)
     print(f"Validation MSE Loss: {avg_loss:.4f}")
-    return torch.cat(all_preds), torch.cat(all_targets)
+    return avg_loss
 
 
 if __name__ == "__main__":
-    MODE = "both"  
-    dataset = StreamerDataset(".test/", mode=MODE, norm_dir="norm_params")
+    # models = ["models/audio_only_reg_model_normalized_t70-3-wd-3.pth", "models/audio_only_reg_model_normalized_t70-3-wd-7.pth", "models/streamer_reg_model_normalized_t70-3-wd-3.pth",
+    #         "models/streamer_reg_model_normalized_t70-3-wd-5.pth", "models/streamer_reg_model_normalized_t70-3-wd-7.pth", "models/text_only_reg_model_normalized_t70-3-wd-3.pth",
+    #         "models/text_only_reg_model_normalized_t70-3-wd-7.pth"]
 
-    # You can split dataset or create val_loader like in your training script
-    from torch.utils.data import Subset
+    models = ['models/fold_reg_1_audio_model.pth', 'models/fold_reg_1_both_model.pth', 'models/fold_reg_1_text_model.pth', 'models/fold_reg_2_audio_model.pth', 'models/fold_reg_2_both_model.pth', 'models/fold_reg_2_text_model.pth', 'models/fold_reg_3_audio_model.pth', 'models/fold_reg_3_both_model.pth', 'models/fold_reg_3_text_model.pth', 'models/fold_reg_4_audio_model.pth', 'models/fold_reg_4_both_model.pth', 'models/fold_reg_4_text_model.pth']
+    for i in models:
+        model_path = i
+        if "text" in i:
+            MODE = "text"
+        elif "audio" in i:
+            MODE = "audio"
+        else:
+            MODE = "both"
+        
+        dataset = StreamerDataset(".test/", mode=MODE, norm_dir="norm_params")
 
-    val_streamers = sorted(os.listdir(".test/"))
+        # You can split dataset or create val_loader like in your training script
+        from torch.utils.data import Subset
 
-    val_indices = [i for i, entry in enumerate(dataset.data) if any(s in entry[0] for s in val_streamers)]
-    val_dataset = Subset(dataset, val_indices)
-    val_loader = DataLoader(val_dataset, batch_size=16, shuffle=True)
+        val_streamers = sorted(os.listdir(".test/"))
 
-    # --- Load model ---
-    TEXT_DIM = AUDIO_DIM = 768
-    HIDDEN_DIM = 128
-    OUTPUT_DIM = 1
+        val_indices = [i for i, entry in enumerate(dataset.data) if any(s in entry[0] for s in val_streamers)]
+        val_dataset = Subset(dataset, val_indices)
+        val_loader = DataLoader(val_dataset, batch_size=16, shuffle=True)
 
-    if MODE == "text":
-        model = TextOnlyRegressor(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_path = "models/text_only_reg_model_normalized_t70-3.pth"
-    elif MODE == "audio":
-        model = AudioOnlyRegressor(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_path = "models/audio_only_reg_model_normalized_t70-3.pth"
-    else:
-        model = MultiModalRegressor(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_path = "models/streamer_reg_model_normalized_t70-3.pth"
+        # --- Load model ---
+        TEXT_DIM = AUDIO_DIM = 768
+        HIDDEN_DIM = 128
+        OUTPUT_DIM = 1
 
-    model_path = "models/fold_reg_4_both_model.pth"
+        if MODE == "text":
+            model = TextOnlyRegressor(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
+            # model_path = "models/text_only_reg_model_normalized_t70-3.pth"
+        elif MODE == "audio":
+            model = AudioOnlyRegressor(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
+            # model_path = "models/audio_only_reg_model_normalized_t70-3.pth"
+        else:
+            model = MultiModalRegressor(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
+            # model_path = "models/streamer_reg_model_normalized_t70-3.pth"
 
-    model.load_state_dict(torch.load(model_path, map_location=DEVICE))
+        
+        print(model_path)
+        
+        model.load_state_dict(torch.load(model_path, map_location=DEVICE))
 
-    # --- Evaluate ---
-    preds, targets = evaluate_model(model, val_loader, mode=MODE, norm_dir="norm_params", device=DEVICE)
+        # --- Evaluate ---
+        avg_loss = evaluate_model(model, val_loader, mode=MODE, norm_dir="norm_params", device=DEVICE)
 
-    # Example: print first 5 predictions vs targets
-    for i in range(5):
-        print(f"Pred: {preds[i].item():.3f}, Target: {targets[i].item():.3f}")
+        with open("results.txt", "a") as f:
+            f.write(f"{model_path}\n")
+            f.write(f"Validation MSE Loss: {avg_loss:.4f}\n\n")
+        # Example: print first 5 predictions vs targets
+        # for i in range(5):
+        #     print(f"Pred: {preds[i].item():.3f}, Target: {targets[i].item():.3f}")

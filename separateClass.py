@@ -12,7 +12,7 @@ import numpy as np
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Mode selection: "text", "audio", or "both"
-MODE = "both"
+MODE = "text"
 
 # Define the Streamer Dataset (supports all modes)
 class StreamerDataset(Dataset):
@@ -242,7 +242,7 @@ if __name__ == "__main__":
     combined.extend(test)
 
     label_dict = get_dict(combined)
-    dataset = StreamerDataset(root_dir="processed", label_dict=label_dict, mode=MODE, normalize=False)
+    dataset = StreamerDataset(root_dir="processed", label_dict=label_dict, mode=MODE, normalize=True)
 
     streamer_to_indices = {}
     for idx, item in enumerate(dataset.data):
@@ -275,13 +275,13 @@ if __name__ == "__main__":
 
     if MODE == "text":
         model = TextOnlyMLP(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "text_only_class_model_normalized_t70-3.pth"
+        model_name = "text_only_class_model_normalized_t70-3-wd-3.pth"
     elif MODE == "audio":
         model = AudioOnlyMLP(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "audio_only_class_model_normalized_t70-3.pth"
+        model_name = "audio_only_class_model_normalized_t70-3-wd-7.pth"
     else:
         model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_name = "streamer_class_model_normalized_t70-3.pth"
+        model_name = "streamer_class_model_normalized_t70-3-wd-7.pth"
 
     optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=1e-3)
     criterion = nn.CrossEntropyLoss()

@@ -232,7 +232,7 @@ if __name__ == "__main__":
     HIDDEN_DIM = 128
     OUTPUT_DIM = 3
     BATCH_SIZE = 16
-    NUM_EPOCHS = 20
+    NUM_EPOCHS = 25
     LR = 1e-3
 
     fold_1 = ['xFSN_Saber', 'Zoomaa', 'zackrawrr', 'TheGeekEntry', 'Thiefs', 'TinaKitten', 'starsmitten', 'supertf', 'Sykkuno', 'robcdee', 'RTGame', 'SovietWomble', 'pupsker', 'Quin69', 'shroud', 'omareloff', 'PirateSoftware', 'RanbooLive', 'miia', 'pashaBiceps', 'nl_Kripp', 'LotharHS', 'MOONMOON', 'NateHill', 'kyliebitkin', 'LVNDMARK', 'Ludwig', 'jordansisco_', 'kyootbot', 'lilypichu', 'iLumpE', 'jasontheween', 'Joe_Bartolozzi', 'Glorious_E', 'Gorgc', 'iiTzTimmy', 'DGthe99', 'filian', 'Flight23white', 'cjya', 'Elajjaz', 'DisguisedToast', 'BrownGotti', 'Caedrel', 'Castro_1021', 'BennyCentral', 'A_Seagull', 'BobRoss', 'ahmpy']
@@ -291,7 +291,7 @@ if __name__ == "__main__":
         else:
             model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
 
-        optimizer = optim.Adam(model.parameters(), lr=LR)
+        optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=1e-5)
         criterion = nn.CrossEntropyLoss()
 
         train_model(model, train_loader, val_loader, optimizer, criterion, num_epochs=NUM_EPOCHS)

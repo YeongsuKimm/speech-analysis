@@ -14,7 +14,6 @@ BATCH_SIZE = 16
 from classification import get_dict
 
 # Normalization flags
-NORMALIZE = True
 
 class Evaluator:
     def __init__(self, model, criterion, device):
@@ -139,31 +138,9 @@ class StreamerDataset(Dataset):
             return audio_features, label
 
 
-def load_model(mode, device):
-    TEXT_DIM = AUDIO_DIM = 768  # adjust if needed
-    HIDDEN_DIM = 128
-    OUTPUT_DIM = 3
-
-    if mode == "text":
-        model = TextOnlyMLP(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_path = "models/text_only_class_model_normalized_t70-3.pth"
-    elif mode == "audio":
-        model = AudioOnlyMLP(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_path = "models/audio_only_class_model_normalized_t70-3.pth"
-    else:
-        model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
-        model_path = "models/streamer_class_model_normalized_t70-3.pth"
-
-
-    model_path = "models/both_class_model_fold_4.pt"
-    model.load_state_dict(torch.load(model_path, map_location=device))
-    model.to(device)
-    model.eval()
-    return model
-
 
 if __name__ == "__main__":
-
+    NORMALIZE = True
     fold_1 = ['xFSN_Saber', 'Zoomaa', 'zackrawrr', 'TheGeekEntry', 'Thiefs', 'TinaKitten', 'starsmitten', 'supertf', 'Sykkuno', 'robcdee', 'RTGame', 'SovietWomble', 'pupsker', 'Quin69', 'shroud', 'omareloff', 'PirateSoftware', 'RanbooLive', 'miia', 'pashaBiceps', 'nl_Kripp', 'LotharHS', 'MOONMOON', 'NateHill', 'kyliebitkin', 'LVNDMARK', 'Ludwig', 'jordansisco_', 'kyootbot', 'lilypichu', 'iLumpE', 'jasontheween', 'Joe_Bartolozzi', 'Glorious_E', 'Gorgc', 'iiTzTimmy', 'DGthe99', 'filian', 'Flight23white', 'cjya', 'Elajjaz', 'DisguisedToast', 'BrownGotti', 'Caedrel', 'Castro_1021', 'BennyCentral', 'A_Seagull', 'BobRoss', 'ahmpy']
     fold_2 = ['Wicked', 'vedal987', 'yourragegaming', 'T90Official', 'thesketchreal', 'TimTheTatman', 'Sideshow', 'SMii7Y', 'Sweet_Anita', 'redspecter23', 'RDCgaming', 'Sommerset', 'Psychoghost', 'QuarterJade', 'ShahZaM', 'NyyBeats', 'Pikabooirl', 'Rainbow6', 'MataraKan', 'Northernlion', 'Ninja', 'LFToxy_val', 'Mendo', 'Nadeshot', 'KmartPoker', 'LuluLuvely', 'LTANorth', 'JayOddity', 'Kitboga', 'Kyedae', 'hypnoshark', 'itsSpoit', 'JackManifoldTV', 'Geef', 'GoldGlove', 'Hiko', 'DEFAC3D', 'ExtraEmily', 'Fanum', 'Casson', 'Dyrus', 'CohhCarnage', 'BreesKnees', 'BrookeAB', 'caseoh_', 'Beardageddon', 'Aztecross', 'benjyfishy', 'Adapt']
     fold_3 = ['Vombuz', 'Valkyrae', 'xQc', 'survivalistaoe2de', 'Thebausffs', 'TenZ', 'Shotz', 'SmallAnt', 'SwaggerSouls', 'RedOpz', 'Ray__C', 'sodapoppin', 'PENTA', 'Punz', 'scump', 'MurderCrumpet', 'peterpark', 'plaqueboymax', 'MaryMaybe', 'Nmplol', 'Nihachu', 'LAXHAWTHORN007', 'MeatyMarley', 'MrSavage', 'KingWoolz', 'Lord_Kebun', 'loltyler1', 'Jacque', 'Keeoh', 'KaiCenat', 'huncho', 'Insym', 'ironmouse', 'Fannsy', 'GernaderJake', 'HasanAbi', 'd0cc_tv', 'EsfandTV', 'Emiru', 'carmen', 'chocoTaco', 'cloakzy', 'BreaK', 'BobbyPoffGaming', 'CaptainSparklez', 'BarbarousKing', 'AuzioMF', 'BadBoyHalo', '39daph']        
@@ -178,14 +155,55 @@ if __name__ == "__main__":
 
     label_dict = get_dict(streamers)
 
-    dataset = StreamerDataset(root_dir=".test", label_dict=label_dict, mode=MODE, normalize=NORMALIZE)
-    data_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False)
+    
 
-    model = load_model(MODE, DEVICE)
-    criterion = nn.CrossEntropyLoss()
 
-    evaluator = Evaluator(model, criterion, DEVICE)
-    loss, accuracy = evaluator.evaluate(data_loader, mode=MODE)
+    # models = ["models/audio_only_class_model_unnormalized_t70-3-wd-3.pth", "models/audio_only_class_model_unnormalized_t70-3-wd-7.pth", "models/streamer_class_model_unnormalized_t70-3-wd-3.pth", 
+    #           "models/streamer_class_model_unnormalized_t70-3-wd-5.pth", "models/streamer_class_model_unnormalized_t70-3-wd-7.pth", "models/text_only_class_model_unnormalized_t70-3-wd-3.pth",
+    #           "models/text_only_class_model_unnormalized_t70-3-wd-7.pth"]
 
-    print(f"Evaluation Loss: {loss:.4f}")
-    print(f"Evaluation Accuracy: {accuracy:.2f}%")
+    # models = ["models/audio_only_class_model_normalized_t70-3-wd-3.pth", "models/audio_only_class_model_normalized_t70-3-wd-7.pth", "models/text_only_class_model_normalized_t70-3-wd-3.pth",
+    #           "models/text_only_class_model_normalized_t70-3-wd-7.pth", "models/streamer_class_model_normalized_t70-3-wd-3.pth", "models/streamer_class_model_normalized_t70-3-wd-5.pth",
+    #           "models/streamer_class_model_normalized_t70-3-wd-7.pth"
+    # ]
+
+    models = ['models/text_class_model_fold_1.pt', 'models/text_class_model_fold_2.pt', 'models/text_class_model_fold_3.pt', 'models/text_class_model_fold_4.pt']
+    
+    TEXT_DIM = AUDIO_DIM = 768  # adjust if needed
+    HIDDEN_DIM = 128
+    OUTPUT_DIM = 3
+
+    for i in models:
+        if "audio" in i:
+            MODE = "audio"
+        elif "text" in i:
+            MODE = "text"
+        else:
+            MODE = "both"
+
+        dataset = StreamerDataset(root_dir=".test", label_dict=label_dict, mode=MODE, normalize=NORMALIZE)
+        data_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False)
+        if MODE == "text":
+            model = TextOnlyMLP(TEXT_DIM, HIDDEN_DIM, OUTPUT_DIM)
+            # model_path = "models/text_only_class_model_normalized_t70-3.pth"
+        elif MODE == "audio":
+            model = AudioOnlyMLP(AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
+            # model_path = "models/audio_only_class_model_normalized_t70-3.pth"
+        else:
+            model = MultiModalMLP(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
+            # model_path = "models/streamer_class_model_normalized_t70-3.pth"
+
+        model_path = i
+        model.load_state_dict(torch.load(model_path, map_location=DEVICE))
+        model.to(DEVICE)
+        model.eval()
+        model = model
+
+        criterion = nn.CrossEntropyLoss()
+
+        evaluator = Evaluator(model, criterion, DEVICE)
+        loss, accuracy = evaluator.evaluate(data_loader, mode=MODE)
+        with open("results.txt", "a") as f:
+            f.write(f"{model_path}\n")
+            f.write(f"Evaluation Loss: {loss:.4f}\n")
+            f.write(f"Evaluation Accuracy: {accuracy:.2f}%\n\n")

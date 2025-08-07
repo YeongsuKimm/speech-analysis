@@ -169,7 +169,7 @@ class MultiModalRegressor(nn.Module):
 
 def train_model(model, train_loader, val_loader, epochs=30, lr=1e-3, mode="text"):
     model.to(DEVICE)
-    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
+    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-3)
     criterion = nn.MSELoss()
 
     for epoch in range(epochs):
@@ -246,5 +246,5 @@ if __name__ == "__main__":
         else:
             model = MultiModalRegressor(TEXT_DIM, AUDIO_DIM, HIDDEN_DIM, OUTPUT_DIM)
 
-        train_model(model, train_loader, val_loader, epochs=30, lr=1e-3, mode=MODE)
-        torch.save(model.state_dict(), f"models/fold_reg_{fold_idx+1}_{MODE}_model.pth")
+        train_model(model, train_loader, val_loader, epochs=20, lr=1e-3, mode=MODE)
+        torch.save(model.state_dict(), f"models/fold_reg_{fold_idx+1}_{MODE}_model_wd-3.pth")
